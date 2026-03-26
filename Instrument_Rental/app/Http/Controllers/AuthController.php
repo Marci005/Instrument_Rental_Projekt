@@ -31,25 +31,35 @@ class AuthController extends Controller
 
         return response()->json(['user' => $user], 201);
     }
-        public function login(Request $request): JsonResponse
-        {
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required|string',
+    public function login(Request $request): JsonResponse
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            throw ValidationException::withMessages([
+                'email' => ['A megadott bejelentkezés nem  megfelelő!'],
             ]);
-
-            if(!Auth::attempt($request->only('email', 'password'))){
-                throw ValidationException::withMessages([
-                    'email' => ['A megadott bejelentkezés nem  megfelelő!'],
-                ]);
-            }
-
-            $request->session()->regenerate();
-
-            return response()->json(['user' => $request->user()]);
-
-            return "asdsa";
         }
+
+        $request->session()->regenerate();
+
+        return response()->json(['user' => $request->user()]);
+    }
+    public function logout(Request $request)
+    {
+        Auth::Guard('web')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->json(['message' => 'Sikeresen kijelentkeztél']);
+
+
+
+    }
 
 
 
