@@ -57,8 +57,11 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Sikeresen kijelentkeztél']);
 
+    }
 
-
+    public function me(Request $request)
+    {
+        return response()->json($request->user());
     }
 
 
