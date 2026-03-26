@@ -11,7 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('instruments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('category_id')->constrained('instrument_categories')->onDelete('cascade');
+            $table->foreignId('brand_id')->constrained('instrument_brands')->onDelete('cascade');
+            $table->enum('condition', ['Új', 'Újszerű', 'Használt']);
+            $table->string('title', 100)->nullable(false);
+            $table->text('description')->nullable();
+        });
     }
 
     /**
@@ -19,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('instruments');
     }
 };

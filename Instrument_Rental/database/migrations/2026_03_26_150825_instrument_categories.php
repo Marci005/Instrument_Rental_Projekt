@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('instrument_categories', function (Blueprint $table) {
             $table->id();
             $table->string('category_name',100)->nullable(false);
-            $table->string('category_description')->nullable();
+            $table->text('category_description')->nullable();
             $table->timestamps();
         });
     }

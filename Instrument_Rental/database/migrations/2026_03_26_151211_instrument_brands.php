@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('instrument_brands', function (Blueprint $table) {
             $table->id();
             $table->string('brand_name')->nullable(false);
-            $table->string('brand_description')->nullable();
+            $table->text('brand_description')->nullable();
             $table->timestamps();
         });
     }
