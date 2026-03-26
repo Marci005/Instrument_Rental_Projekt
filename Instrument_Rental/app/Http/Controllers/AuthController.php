@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class AuthController extends Controller
 {
@@ -15,5 +21,15 @@ class AuthController extends Controller
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
         ]);
+
+        $user = User::create($data);
+
+        Auth::login($user);
+
+        $request->session()->regenerate();
+
+
+
+
     }
 }
