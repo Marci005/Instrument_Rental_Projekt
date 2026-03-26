@@ -13,7 +13,8 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $data = $request->validate([
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => ['required', 'confirmed', Password::min(8)],
@@ -28,8 +29,28 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-
-
-
+        return response()->json(['user' => $user], 201);
     }
+        public function login(Request $request): JsonResponse
+        {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string',
+            ]);
+
+            if(!Auth::attempt($request->only('email', 'password'))){
+                throw ValidationException::withMessages([
+                    'email' => ['A megadott bejelentkezés nem  megfelelő!'],
+                ]);
+            }
+
+            $request->session()->regenerate();
+
+            return response()->json(['user' => $request->user()]);
+
+            return "asdsa";
+        }
+
+
+
 }
