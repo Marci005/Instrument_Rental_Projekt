@@ -16,7 +16,7 @@ return new class extends Migration
             $table->boolean('is_admin')->default(false);
             $table->string('email', 100)->unique();
             $table->string('password', 100)->nullable(false);
-            $table->enum('title', ['Úr', 'Hölgy', 'Doktor', 'Professzor']);
+            $table->enum('title', ['Úr', 'Hölgy', 'Dr.', 'Professzor']);
             $table->string('first_name', 50)->nullable(false);
             $table->string('last_name', 50)->nullable(false);
             $table->timestamps();
