@@ -11,7 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('instrument_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('category_name',100)->nullable(false);
+            $table->string('category_description');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('instrument_categories');
     }
 };
