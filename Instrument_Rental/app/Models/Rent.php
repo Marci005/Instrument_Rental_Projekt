@@ -47,7 +47,7 @@ class Rent extends Model
     }
 
     /**
-     * Connects the Rent model the Instrument Model with HasMany relation
+     * Connects the Rent model the Instrument Model with BelongsTo relation
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
 
