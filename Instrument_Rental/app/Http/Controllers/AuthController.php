@@ -15,6 +15,7 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        //validate the registering credentials
         $data = $request->validate([
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => ['required', 'confirmed', Password::min(8)],
@@ -24,30 +25,35 @@ class AuthController extends Controller
         ]);
 
         $user = User::create($data);
-
+        //Generates a uniqe id and searches for the matched user id
         Auth::login($user);
 
+        //csrf token
         $request->session()->regenerate();
-
+        //returns the user data and a 201 created status code
         return response()->json(['user' => $user], 201);
     }
+
+    //login request
     public function login(Request $request): JsonResponse
     {
+        //validates the login credentials
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
-
+        //If the authentication fails, throws an error, else:
         if (!Auth::attempt($request->only('email', 'password'))) {
             throw ValidationException::withMessages([
                 'email' => ['A megadott bejelentkezés nem  megfelelő!'],
             ]);
         }
-
+        //else: starts the session
         $request->session()->regenerate();
 
         return response()->json(['user' => $request->user()]);
     }
+    //logs out the user, terminates the session and regenerates the csrf session
     public function logout(Request $request)
     {
         Auth::Guard('web')->logout();
@@ -59,6 +65,7 @@ class AuthController extends Controller
 
     }
 
+    //gives back the user data
     public function me(Request $request)
     {
         return response()->json($request->user());
