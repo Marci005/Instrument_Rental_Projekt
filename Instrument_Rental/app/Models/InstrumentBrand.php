@@ -19,7 +19,7 @@ class InstrumentBrand extends Model
     ];
 
     /**
-     * Connects the IsntrumentBrand model the Instruments Model with HasMany relation
+     * Connects the InstrumentBrand model the Instruments Model with HasMany relation
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
 
