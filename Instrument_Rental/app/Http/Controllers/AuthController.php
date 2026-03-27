@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DeepCopy\Filter\KeepFilter;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
@@ -54,7 +55,7 @@ class AuthController extends Controller
         return response()->json(['user' => $request->user()]);
     }
     //logs out the user, terminates the session and regenerates the csrf session
-    public function logout(Request $request)
+    public function logout(Request $request) : JsonResponse
     {
         Auth::Guard('web')->logout();
 
@@ -66,7 +67,7 @@ class AuthController extends Controller
     }
 
     //gives back the user data
-    public function me(Request $request)
+    public function me(Request $request) : JsonResponse
     {
         return response()->json($request->user());
     }
