@@ -24,8 +24,7 @@ class Rent extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * Ezek az attribútumok automatikusan a megfelelő
-     * típusra lesznek alakítva az Eloquent által.
+     * These attributes will automatically be cast to the appropriate type by Eloquent
      *
      * @var array<string>
      */
