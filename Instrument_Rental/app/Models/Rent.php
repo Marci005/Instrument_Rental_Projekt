@@ -41,7 +41,7 @@ class Rent extends Model
      * Connects the Rent model the User Model with belongsTo relation
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function user()
+    public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -50,7 +50,7 @@ class Rent extends Model
      * Connects the Rent model the Instrument Model with HasMany relation
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function instrument()
+    public function instrument() : BelongsTo
     {
         return $this->belongsTo(Instrument::class);
     }
