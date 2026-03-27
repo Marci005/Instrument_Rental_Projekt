@@ -13,7 +13,7 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         //validate the registering credentials
         $data = $request->validate([
@@ -25,7 +25,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::create($data);
-        //Generates a uniqe id and searches for the matched user id
+        //Generates a unique id and searches for the matched user id
         Auth::login($user);
 
         //csrf token
