@@ -36,21 +36,21 @@ class Rent extends Model
         'real_end_date',
     ];
 
+
     /**
-     * Connects the Rent model the User Model with BelongsTo relation
+     * Connects the Rent model the User Model with belongsTo relation
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-     * Connects the Rent model the Instrument Model with BelongsTo relation
+     * Connects the Rent model the Instrument Model with HasMany relation
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-
-    public function instrument(): BelongsTo
+    public function instrument()
     {
         return $this->belongsTo(Instrument::class);
     }
