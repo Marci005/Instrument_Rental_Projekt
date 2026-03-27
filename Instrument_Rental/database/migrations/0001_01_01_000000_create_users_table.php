@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        /**
+         * created the users table and its datas
+         * + has a dropifexist function
+         */
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_admin')->default(false);
