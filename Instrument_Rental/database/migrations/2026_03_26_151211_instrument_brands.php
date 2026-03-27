@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * created the isntrument brands table and its datas
+     * + has a dropifexist function
      */
     public function up(): void
     {
