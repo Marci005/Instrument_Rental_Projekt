@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Rent extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'user_id',
+        'instrument_id',
+        'rent_price',
+        'start_date',
+        'end_date',
+        'real_end_date',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * Ezek az attribútumok automatikusan a megfelelő
+     * típusra lesznek alakítva az Eloquent által.
+     *
+     * @var array<string>
+     */
+
+    protected $casts =[
+
+        'start_date',
+        'end_date',
+        'real_end_date',
+    ];
+
+    /**
+     * Connects the Rent model the User Model with BelongsTo relation
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Connects the Rent model the Instrument Model with HasMany relation
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
+    public function instrument(): BelongsTo
+    {
+        return $this->belongsTo(Instrument::class);
+    }
+
+}
