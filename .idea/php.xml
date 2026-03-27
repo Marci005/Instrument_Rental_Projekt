@@ -125,6 +125,8 @@
       <path value="$PROJECT_DIR$/Instrument_Rental/vendor/dragonmantank/cron-expression" />
       <path value="$PROJECT_DIR$/Instrument_Rental/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/Instrument_Rental/vendor/laravel/sanctum" />
+      <path value="$PROJECT_DIR$/Instrument_Rental/vendor/barryvdh/laravel-ide-helper" />
+      <path value="$PROJECT_DIR$/Instrument_Rental/vendor/barryvdh/reflection-docblock" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3">
