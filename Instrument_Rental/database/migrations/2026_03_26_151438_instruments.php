@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('condition', ['Új', 'Újszerű', 'Használt']);
             $table->string('title', 100)->nullable(false);
             $table->text('description')->nullable();
+            $table->timestamps();
         });
     }
 
