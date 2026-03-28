@@ -4,6 +4,10 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/Instrument_Rental/tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/Instrument_Rental/tests/Unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Instrument_Rental/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/Instrument_Rental/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/Instrument_Rental/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/Instrument_Rental/tests" isTestSource="true" packagePrefix="Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/Instrument_Rental/vendor/barryvdh/laravel-ide-helper" />
       <excludeFolder url="file://$MODULE_DIR$/Instrument_Rental/vendor/barryvdh/reflection-docblock" />
     </content>
