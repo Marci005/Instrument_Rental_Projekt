@@ -28,10 +28,10 @@ class AddressController extends Controller
      * actually belongs to the logged‑in user. If not, a 403 Forbidden
      * JSON response is returned.
      *
-     * @param \Illuminate\Http\Request $request  The incoming HTTP request.
-     * @param \App\Models\Address      $address  The address instance resolved via route model binding.
+     * @param $request  /The incoming HTTP request.
+     * @param $address  /The address instance resolved via route model binding.
      *
-     * @return \Illuminate\Http\JsonResponse     The address data or a 403 error message.
+     * @return /The address data or a 403 error message.
      */
     public function show(Request $request, Address $address){
         if($address->user_id !== $request->user()->id){
