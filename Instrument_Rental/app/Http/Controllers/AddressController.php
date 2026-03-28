@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\Address;
+use Illuminate\Http\Request;
+
 
 class AddressController extends Controller
 {
@@ -79,5 +79,16 @@ class AddressController extends Controller
         $address->update($data);
 
         return response()->json($address);
+    }
+
+    public function destroy(Request $request, Address $address)
+    {
+        if($address->user_id !== $request->user()->id){
+            return response()->json(['message' => 'You do not have permission to delete this address.'], 403);
+        }
+
+        $address->delete();
+
+        return response()->json(['message'=>'Address Succesfully deleted', 204]);
     }
 }
