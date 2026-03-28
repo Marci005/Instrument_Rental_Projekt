@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('addresses', static function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->enum('address_type', ['számlázási', 'szállítási', 'mindkettő']);
+            $table->enum('address_type', ['számlázási', 'szállítási', 'mindkettő'])->nullable(false);
             $table->integer('zip', 50)->nullable(false);
             $table->string('settlement', 100)->nullable(false);
             $table->string('street', 100)->nullable(false);

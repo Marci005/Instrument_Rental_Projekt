@@ -11,6 +11,8 @@ class AddressController extends Controller
     /**
      * GET /api/addresses
      * The logged-in user's data
+     * @param Request $request
+     * return
      */
     public function index(Request $request)
     {
@@ -35,6 +37,47 @@ class AddressController extends Controller
         if($address->user_id !== $request->user()->id){
             return response()->json(['message' => 'You do not have permission to view this address.'], 403);
         }
+        return response()->json($address);
+    }
+
+    /**
+     * POST /api/addresses
+     * The logged-in user stores new data to his record
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'address_type' => 'required|in:számlázási,szállítási,mindkettő',
+            'zip' => 'required|string|max:50',
+            'settlement' => 'required|string|max:100',
+            'street' => 'required|string|max:100',
+            'street_type' => 'required|string|max:30',
+            'house_number' => 'required|string|max:100',
+        ]);
+
+        $address = $request->user()->addresses()->create($data);
+
+        return response()->json($address, 201);
+    }
+
+    public function update(Request $request, Address $address)
+    {
+        if($address->user_id !== $request->user()->id){
+            return response()->json(['message' => 'You do not have permission to update this address.'], 403);
+        }
+        $data = $request->validate([
+            'address_type' => 'required|in:számlázási,szállítási,mindkettő',
+            'zip' => 'required|string|max:50',
+            'settlement' => 'required|string|max:100',
+            'street' => 'required|string|max:100',
+            'street_type' => 'required|string|max:30',
+            'house_number' => 'required|string|max:100',
+        ]);
+
+        $address->update($data);
+
         return response()->json($address);
     }
 }
