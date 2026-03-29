@@ -31,9 +31,9 @@ class Rent extends Model
 
     protected $casts =[
 
-        'start_date',
-        'end_date',
-        'real_end_date',
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'real_end_date' => 'date',
     ];
 
 
