@@ -74,3 +74,5 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     Route::patch('/instrument_categories/{InstrumentCategory}', [InstrumentCategoryController::class, 'update']);
     Route::delete('/instrument_categories', [InstrumentCategoryController::class, 'destroy']);
 });
+
+
