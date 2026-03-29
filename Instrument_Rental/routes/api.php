@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\InstrumentBrandController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/addresses', [AddressController::class, 'destroy']);
 });
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
+Route::get('/instrument_brands', [InstrumentBrandController::class, 'index']);
+Route::get('/instrument_brands/{brand}', [InstrumentBrandController::class, 'show']);
+
+Route::middleware('auth:sanctum', 'is_admin')->group(function () {
+    Route::post('/instrument_brands', [InstrumentBrandController::class, 'store']);
+    Route::put('/instrument_brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
+    Route::patch('/instrument_brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
+    Route::delete('/instrument_brands', [InstrumentBrandController::class, 'destroy']);
+});
