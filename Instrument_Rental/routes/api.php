@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InstrumentBrandController;
+use App\Http\Controllers\InstrumentCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,4 +62,15 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     Route::put('/instrument_brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
     Route::patch('/instrument_brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
     Route::delete('/instrument_brands', [InstrumentBrandController::class, 'destroy']);
+});
+
+
+Route::get('/instrument_categories', [InstrumentCategoryController::class, 'index']);
+Route::get('/instrument_categories/{category}', [InstrumentCategoryController::class, 'show']);
+
+Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
+    Route::post('/instrument_categories', [InstrumentCategoryController::class, 'store']);
+    Route::put('/instrument_categories/{InstrumentCategory}', [InstrumentCategoryController::class, 'update']);
+    Route::patch('/instrument_categories/{InstrumentCategory}', [InstrumentCategoryController::class, 'update']);
+    Route::delete('/instrument_categories', [InstrumentCategoryController::class, 'destroy']);
 });
