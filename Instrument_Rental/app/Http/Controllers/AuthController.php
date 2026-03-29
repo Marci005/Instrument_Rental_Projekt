@@ -46,7 +46,7 @@ class AuthController extends Controller
         //If the authentication fails, throws an error, else:
         if (!Auth::attempt($request->only('email', 'password'))) {
             throw ValidationException::withMessages([
-                'email' => ['A megadott bejelentkezés nem  megfelelő!'],
+                'email' => ['The credentials you provided did not match our records.'],
             ]);
         }
         //else: starts the session
@@ -62,7 +62,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return response()->json(['message' => 'Sikeresen kijelentkeztél']);
+        return response()->json(['message' => 'Logged-out successfully.']);
 
     }
 
