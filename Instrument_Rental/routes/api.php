@@ -56,7 +56,7 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/instrument_brands', [InstrumentBrandController::class, 'index']);
 Route::get('/instrument_brands/{brand}', [InstrumentBrandController::class, 'show']);
 
-Route::middleware('auth:sanctum', 'is_admin')->group(function () {
+Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     Route::post('/instrument_brands', [InstrumentBrandController::class, 'store']);
     Route::put('/instrument_brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
     Route::patch('/instrument_brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
