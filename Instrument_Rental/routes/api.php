@@ -86,3 +86,12 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
     Route::patch('/instruments/{instrument}', [InstrumentController::class, 'update']);
     Route::delete('/instruments/{instrument}', [InstrumentController::class, 'destroy']);
 });
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/rents',           [RentController::class, 'index']);
+    Route::get('/rents/{rent}',    [RentController::class, 'show']);
+    Route::post('/rents',          [RentController::class, 'store']);
+    Route::put('/rents/{rent}',    [RentController::class, 'update']);
+    Route::patch('/rents/{rent}',  [RentController::class, 'update']);
+    Route::delete('/rents/{rent}', [RentController::class, 'destroy']);
+});
