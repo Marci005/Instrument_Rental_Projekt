@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\middleware;
+namespace App\Http\Middleware;
 
 
 
