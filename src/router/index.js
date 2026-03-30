@@ -1,9 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeView from "@/views/public/HomeView.vue";
-import InstrumentsView from "@/views/public/InstrumentsView.vue";
-import InstrumentDetailsView from "@/views/public/InstrumentDetailsView.vue";
-
 import LoginView from "@/views/auth/LoginView.vue";
 import RegisterView from "@/views/auth/RegisterView.vue";
 
@@ -14,9 +10,11 @@ import AdminLendingDetailsView from "@/views/app/LendingDetailsView.vue";
 import AdminProfileView from "@/views/app//ProfileView.vue";
 import AdminSettingsView from "@/views/app/SettingsView.vue";
 
-import PublicLayout from "@/components/layouts/PublicLayout.vue";
-import AuthLayout from "@/components/layouts/AuthLayout.vue";
-import AppLayout from "@/components/layouts/AppLayout.vue";
+const isNumeric = (n)=>/^\d+$/.test(n);
+const isOrderId = (n) => /^ORD-\d{4}$/.test(n);
+const PublicLayout=() => import("@/components/layouts/PublicLayout.vue");
+const AuthLayout = () => import('@/components/layouts/AuthLayout.vue');
+const AppLayout = () => import('@/components/layouts/AppLayout.vue');
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,20 +28,20 @@ const router = createRouter({
                 {
                     path: '',
                     name: 'home',
-                    component: HomeView,
+                    component: () =>import("@/views/public/HomeView.vue"),
                     meta: { title: 'Kezdőlap' }
                 },
                 {
                     path: 'instruments',
                     name: 'instruments',
-                    component: InstrumentsView,
+                    component: () =>import("@/views/public/InstrumentsView.vue"),
                     meta: { title: 'Hangszerek' }
                 },
                 {
                     path: 'instruments/:id',
                     name: 'instrument-details',
                     props: true,
-                    component: InstrumentDetailsView,
+                    component: () =>import("@/views/public/InstrumentDetailsView.vue"),
                     meta: { title: 'Részletek' }
                 }
             ]

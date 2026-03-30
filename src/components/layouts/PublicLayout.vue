@@ -1,6 +1,12 @@
-<script >
+<script>
+import {RouterLink, RouterView} from "vue-router";
+
 export default {
-  name:"PublicLayout"
+  name: "PublicLayout",
+  components: {
+    RouterLink,
+    RouterView
+  }
 }
 </script>
 
