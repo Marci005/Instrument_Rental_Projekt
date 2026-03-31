@@ -1,9 +1,19 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
+import { http } from "@/utils/http.js";
 
 export default {
   name: "PublicLayout",
-  components: { RouterLink, RouterView }
+  components: { RouterLink, RouterView },
+  data() {
+    return {
+      categories: []
+    }
+  },
+  async mounted() {
+    const response = await http.get('/categories')
+    this.categories = response.data
+  }
 }
 </script>
 
@@ -27,9 +37,11 @@ export default {
                 Hangszerek
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
-                <li><RouterLink class="dropdown-item" to="/instruments/guitars">Gitárok</RouterLink></li>
-                <li><RouterLink class="dropdown-item" to="/instruments/pianos">Zongorák</RouterLink></li>
-                <li><RouterLink class="dropdown-item" to="/instruments/drums">Dobok</RouterLink></li>
+                <li v-for="category in categories" :key="category.id">
+                  <RouterLink class="dropdown-item" :to="`/instruments/${category.id}`">
+                    {{ category.name }}
+                  </RouterLink>
+                </li>
                 <li><hr class="dropdown-divider"></li>
                 <li><RouterLink class="dropdown-item" to="/instruments">Összes hangszer</RouterLink></li>
               </ul>
