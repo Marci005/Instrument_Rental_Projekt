@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * created the rents table and its datas
-     * + has a dropifexist function
+     * Creates the rents table and its columns.
+     * + has a dropIfExists function
      */
     public function up(): void
     {

@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * created the users table and its datas
-     * + has a dropifexist function
+     * Creates the addresses table and its columns.
+     * + has a dropIfExists function
      */
-
     public function up(): void
     {
         Schema::create('addresses', static function (Blueprint $table) {
