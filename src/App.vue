@@ -7,11 +7,7 @@ export default {
 </script>
 
 <template>
-  <AppLayout/>
-  <main class="container my-4">
     <RouterView :instruments="instruments" :lendings="lendings"/>
-  </main>
-
 </template>
 
 <style scoped></style>
