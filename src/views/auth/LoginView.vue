@@ -1,4 +1,5 @@
 <script>
+import axios from 'axios'
 import { http } from "@/utils/http.js";
 
 export default {
@@ -15,9 +16,10 @@ export default {
       this.error = null
       this.loading = true
       try {
-        await http.get('/sanctum/csrf-cookie')
-        await http.post('/login', this.form)
-        this.$router.push('/home')
+        await axios.get('http://localhost:8000/sanctum/csrf-cookie', { withCredentials: true })
+        const response = await http.post('/login', this.form)
+        localStorage.setItem('role', response.data.user.role)
+        this.$router.push({ name: 'home' })
       } catch (e) {
         this.error = 'Hibás email vagy jelszó.'
       } finally {
@@ -48,7 +50,7 @@ export default {
       </button>
       <p class="text-center mt-3 mb-0 small">
         Még nincs fiókod?
-        <RouterLink to="/register">Regisztrálj</RouterLink>
+        <RouterLink to="/auth/register">Regisztrálj</RouterLink>
       </p>
     </div>
   </div>

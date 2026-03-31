@@ -7,20 +7,16 @@ import LendingView from "@/components/lending/LendingView.vue";
 
 import AdminLendingListView from "@/views/app/LendingListView.vue";
 import AdminLendingDetailsView from "@/views/app/LendingDetailsView.vue";
-import AdminProfileView from "@/views/app//ProfileView.vue";
+import AdminProfileView from "@/views/app/ProfileView.vue";
 import AdminSettingsView from "@/views/app/SettingsView.vue";
 
-const isNumeric = (n)=>/^\d+$/.test(n);
-const isOrderId = (n) => /^ORD-\d{4}$/.test(n);
-const PublicLayout=() => import("@/components/layouts/PublicLayout.vue");
+const PublicLayout = () => import("@/components/layouts/PublicLayout.vue");
 const AuthLayout = () => import('@/components/layouts/AuthLayout.vue');
 const AppLayout = () => import('@/components/layouts/AppLayout.vue');
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-
-
         {
             path: '/',
             component: PublicLayout,
@@ -28,29 +24,29 @@ const router = createRouter({
                 {
                     path: '',
                     name: 'home',
-                    component: () =>import("@/views/public/HomeView.vue"),
+                    component: () => import("@/views/public/HomeView.vue"),
                     meta: { title: 'Kezdőlap' }
                 },
                 {
                     path: 'instruments',
                     name: 'instruments',
-                    component: () =>import("@/views/public/InstrumentsView.vue"),
+                    component: () => import("@/views/public/InstrumentsView.vue"),
                     meta: { title: 'Hangszerek' }
                 },
                 {
                     path: 'instruments/:id',
                     name: 'instrument-details',
                     props: true,
-                    component: () =>import("@/views/public/InstrumentDetailsView.vue"),
+                    component: () => import("@/views/public/InstrumentDetailsView.vue"),
                     meta: { title: 'Részletek' }
                 }
             ]
         },
 
-
         {
             path: '/auth',
             component: AuthLayout,
+            meta: { guest: true },
             children: [
                 {
                     path: 'login',
@@ -114,7 +110,6 @@ const router = createRouter({
             ]
         },
 
-
         {
             path: '/:pathMatch(.*)*',
             name: 'not-found',
@@ -124,22 +119,25 @@ const router = createRouter({
     ]
 })
 
-
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
     document.title = (to.meta.title || 'Oldal') + ' - Kölcsönző'
 
-    const isLoggedIn = !!localStorage.getItem('token')
+    const isLoggedIn = !!localStorage.getItem('role')
     const isAdmin = localStorage.getItem('role') === 'admin'
 
     if (to.meta.requiresAuth && !isLoggedIn) {
-        return next({ name: 'login' })
+        return { name: 'login' }
     }
 
     if (to.meta.requiresAdmin && !isAdmin) {
-        return next({ name: 'not-authorised' })
+        return { name: 'home' }
     }
 
-    next()
+    if (to.meta.guest && isLoggedIn) {
+        return { name: 'home' }
+    }
+
+    return true
 })
 
 export default router

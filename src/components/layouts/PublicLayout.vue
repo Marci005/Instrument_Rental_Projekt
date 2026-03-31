@@ -11,8 +11,12 @@ export default {
     }
   },
   async mounted() {
-    const response = await http.get('/categories')
-    this.categories = response.data
+    try {
+      const response = await http.get('/instrument-categories')
+      this.categories = response.data
+    } catch (e) {
+      console.warn('Kategóriák betöltése sikertelen')
+    }
   }
 }
 </script>

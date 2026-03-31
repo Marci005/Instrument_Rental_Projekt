@@ -1,13 +1,11 @@
 <script>
-import AppLayout from "@/components/layouts/AppLayout.vue";
 export default {
-  name:"App",
-  components: {AppLayout}
+  name: "App"
 }
 </script>
 
 <template>
-    <RouterView :instruments="instruments" :lendings="lendings"/>
+  <RouterView />
 </template>
 
 <style scoped></style>
