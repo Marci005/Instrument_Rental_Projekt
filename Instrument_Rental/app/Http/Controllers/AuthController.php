@@ -81,7 +81,8 @@ class AuthController extends Controller
     // Regenerates (terminates) the session to prevent session fixation attacks, generates a new csrf token
     public function logout(Request $request) : JsonResponse
     {
-        Auth::Guard('web')->logout();
+
+        $request->user()->currentAccessToken()->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
