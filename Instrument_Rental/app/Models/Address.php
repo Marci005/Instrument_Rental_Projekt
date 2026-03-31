@@ -19,6 +19,10 @@ class Address extends Model
         'zip',
         'street',
         'house_number',
+        'address_type',
+        'settlement',
+        'floor_number',
+        'door_number',
     ];
     /**
      * Connects this model to the User model's user_id
