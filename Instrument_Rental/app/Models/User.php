@@ -9,23 +9,23 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
+
 
     /**
-     * Get the attributes that should be cast.
+     * Attributes that can be filled by the user.
+     * These fields can be filled using create() or fill() methods.
+     * Prevents mass assignment vulnerabilities by whitelisting safe fields.
      *
-     * @return array<string, string>
+     * @var array<string>
      */
 
-    /**
-     * Attributes that can be filled by the user
-     * @var string[]
-     */
     protected $fillable = [
         'first_name',
         'last_name',
@@ -34,9 +34,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * Attributes that should be hidden for arrays and JSON
-     * @var string[]
+     * Attributes that should be hidden for serialization.
+     * These fields will not be visible in JSON responses.
+     * Protects sensitive data from being exposed to the frontend.
+     *
+     * @var array<string>
      */
+
     protected $hidden = [
         'is_admin',
         'password',
@@ -44,9 +48,16 @@ class User extends Authenticatable
     ];
 
     /**
-     * gives back the time when the email has been verifyed, plus the password hashed
-     * @return string[]
+     * Cast model attributes to specific types.
+     * Defines how certain fields are automatically converted when accessed.
+     * Ensures type safety and automatic transformation of stored values.
+     *
+     * - email_verified_at: converted to a datetime object
+     * - password: automatically hashed when set
+     *
+     * @return array<string, string>
      */
+
     protected function casts(): array
     {
         return [

@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Rent extends Model
 {
+
     /**
-     * The attributes that are mass assignable.
+     * Attributes that can be filled by the user.
+     * These fields can be filled using create() or fill() methods.
+     * Prevents mass assignment vulnerabilities by whitelisting safe fields.
      *
-     * @var list<string>
+     * @var array<string>
      */
+
     protected $fillable = [
         'user_id',
         'instrument_id',
@@ -22,9 +26,9 @@ class Rent extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * These attributes will automatically be cast to the appropriate type by Eloquent
+     * Attributes that should be cast to native types.
+     * These attributes will automatically be cast to the appropriate type by Eloquent.
+     * Ensures date fields are returned as correctly (Carbon date) instead of plain strings.
      *
      * @var array<string>
      */
@@ -36,20 +40,25 @@ class Rent extends Model
         'real_end_date' => 'date',
     ];
 
-
     /**
-     * Connects the Rent model the User Model with belongsTo relation
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Connects the Rent model to the User model with a BelongsTo relation.
+     * One rent belongs to one user.
+     *
+     * @return BelongsTo
      */
+
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-     * Connects the Rent model the Instrument Model with HasMany relation
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Connects the Rent model to the Instrument model with a BelongsTo relation.
+     * One rent belongs to one user.
+     *
+     * @return BelongsTo
      */
+
     public function instrument() : BelongsTo
     {
         return $this->belongsTo(Instrument::class);

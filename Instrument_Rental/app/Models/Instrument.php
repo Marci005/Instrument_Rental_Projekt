@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Instrument extends Model
 {
     /**
-     * The attributes that are mass assignable.
+     * Attributes that can be filled by the user.
+     * These fields can be filled using create() or fill() methods.
+     * Prevents mass assignment vulnerabilities by whitelisting safe fields.
      *
-     * @var list<string>
+     * @var array<string>
      */
 
     protected $fillable = [
@@ -22,8 +24,10 @@ class Instrument extends Model
     ];
 
     /**
-     * Connects the Instrument model the InstrumentCategory Model with BelongsTo relation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Connects the Instrument model to the InstrumentCategory model with a BelongsTo relation.
+     * One instrument belongs to one category.
+     *
+     * @return BelongsTo
      */
 
     public function category(): BelongsTo
@@ -32,8 +36,10 @@ class Instrument extends Model
     }
 
     /**
-     * Connects the Instrument model the InstrumentBrand Model with BelongsTo relation
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Connects the Instrument model to the InstrumentBrand model with a BelongsTo relation.
+     * One instrument belongs to one brand.
+     *
+     * @return BelongsTo
      */
     public function brand(): BelongsTo
     {

@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class InstrumentBrand extends Model
 {
     /**
-     * The attributes that are mass assignable.
+     * Attributes that can be filled by the user.
+     * These fields can be filled using create() or fill() methods.
+     * Prevents mass assignment vulnerabilities by whitelisting safe fields.
      *
-     * @var list<string>
+     * @var array<string>
      */
 
     protected $fillable = [
@@ -19,8 +21,10 @@ class InstrumentBrand extends Model
     ];
 
     /**
-     * Connects the InstrumentBrand model the Instruments Model with HasMany relation
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Connects the InstrumentBrand model to the Instruments model with a HasMany relation.
+     * One brand can have many instruments.
+     *
+     * @return HasMany
      */
 
     public function instruments(): HasMany

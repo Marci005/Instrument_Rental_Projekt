@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
+
     /**
-     * The attributes that are mass assignable.
+     * Attributes that can be filled by the user.
+     * These fields can be filled using create() or fill() methods.
+     * Prevents mass assignment vulnerabilities by whitelisting safe fields.
      *
-     * @var list<string>
+     * @var array<string>
      */
+
     protected $fillable = [
         'user_id',
         'country',
@@ -24,11 +28,14 @@ class Address extends Model
         'floor_number',
         'door_number',
     ];
+
     /**
-     * Connects this model to the User model's user_id
+     * Connects the Address model to the User model with a BelongsTo relation.
+     * One address belongs to one user.
      *
-     * @return
+     * @return BelongsTo
      */
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
