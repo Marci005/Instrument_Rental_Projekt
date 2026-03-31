@@ -22,7 +22,7 @@ class Instrument extends Model
     ];
 
     /**
-     * Connects the InstrumentB model the InstrumentCategory Model with BelongsTo relation
+     * Connects the Instrument model the InstrumentCategory Model with BelongsTo relation
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
 
@@ -32,7 +32,7 @@ class Instrument extends Model
     }
 
     /**
-     * Connects the InstrumentB model the InstrumentBrand Model with BelongsTo relation
+     * Connects the Instrument model the InstrumentBrand Model with BelongsTo relation
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function brand(): BelongsTo
