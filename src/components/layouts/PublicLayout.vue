@@ -12,7 +12,7 @@ export default {
   },
   async mounted() {
     try {
-      const response = await http.get('/instrument-categories')
+      const response = await http.get('api/instrument_categories')
       this.categories = response.data
     } catch (e) {
       console.warn('Kategóriák betöltése sikertelen')
