@@ -1,6 +1,6 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
-import { http } from "@/utils/http.js";
+import api from "@/utils/http.js";
 
 export default {
   name: "PublicLayout",
@@ -12,7 +12,7 @@ export default {
   },
   async mounted() {
     try {
-      const response = await http.get('api/instrument_categories')
+      const response = await api.get('api/instrument_categories')
       this.categories = response.data
     } catch (e) {
       console.warn('Kategóriák betöltése sikertelen')
@@ -34,29 +34,24 @@ export default {
         <div class="collapse navbar-collapse" id="nav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/home">Kezdőlap</RouterLink>
+              <RouterLink class="nav-link" to="/">Kezdőlap</RouterLink>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                Hangszerek
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li v-for="category in categories" :key="category.id">
-                  <RouterLink class="dropdown-item" :to="`/instruments/${category.id}`">
-                    {{ category.name }}
-                  </RouterLink>
-                </li>
-                <li><hr class="dropdown-divider"></li>
-                <li><RouterLink class="dropdown-item" to="/instruments">Összes hangszer</RouterLink></li>
-              </ul>
+            <li class="nav-item">
+              <RouterLink class="nav-link" to="/instruments">Hangszerek</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/rentals">Kölcsönzéseim</RouterLink>
             </li>
           </ul>
+
           <div class="d-flex gap-2">
-            <RouterLink class="btn btn-outline-light btn-sm" to="/auth/login">Bejelentkezés</RouterLink>
-            <RouterLink class="btn btn-warning btn-sm" to="/register">Regisztráció</RouterLink>
+            <RouterLink class="btn btn-outline-light btn-sm" to="/auth/login">
+              Bejelentkezés
+            </RouterLink>
+
+            <RouterLink class="btn btn-warning btn-sm" to="/auth/register">
+              Regisztráció
+            </RouterLink>
           </div>
         </div>
       </div>
