@@ -7,7 +7,6 @@ export default {
 <template>
   <div class="home-container">
 
-    <!-- HERO SECTION -->
     <section class="hero d-flex align-items-center text-center text-white">
       <div class="container">
         <h1 class="display-3 fw-bold mb-3">Hangszerek, amiket imádni fogsz</h1>
@@ -15,7 +14,6 @@ export default {
           Bérelj profi hangszereket gyorsan és megfizethető áron.
         </p>
 
-        <!-- IDE RAKTAM A ROUTER-LINKET -->
         <router-link
             to="/hangszerek"
             class="btn btn-warning btn-lg px-4 py-2 fw-semibold"
@@ -58,7 +56,6 @@ export default {
       </div>
     </section>
 
-    <!-- CTA SZEKCIÓ -->
     <section class="py-5 text-center">
       <div class="container">
         <h2 class="fw-bold mb-3">Készen állsz a zenére?</h2>
@@ -83,7 +80,7 @@ export default {
   background: url('https://images.unsplash.com/photo-1511379938547-c1f69419868d') center/cover no-repeat;
 }
 
-/* SÖTÉT OVERLAY A JOBB OLVASHATÓSÁGÉRT */
+
 .hero::before {
   content: "";
   position: absolute;
