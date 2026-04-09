@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../utils/authStore'
 
 import LoginView from "@/views/auth/LoginView.vue";
 import RegisterView from "@/views/auth/RegisterView.vue";
 
-import LendingView from "@/components/lending/LendingView.vue";
+import LendingView from "@/views/public/LendingView.vue";
 
 import AdminLendingListView from "@/views/app/LendingListView.vue";
 import AdminLendingDetailsView from "@/views/app/LendingDetailsView.vue";
@@ -22,7 +23,7 @@ const router = createRouter({
             component: PublicLayout,
             children: [
                 {
-                    path: '',
+                    path: '/',
                     name: 'home',
                     component: () => import("@/views/public/HomeView.vue"),
                     meta: { title: 'Kezdőlap' }
@@ -119,7 +120,14 @@ const router = createRouter({
     ]
 })
 
+/*
+    Rányomunk egy linkre, és mielőtt átirányít minket
+    a rendszer, a beforeEach lefut.
+*/
 router.beforeEach((to, from) => {
+    const auth = useAuthStore()
+    console.log(auth.user)
+
     document.title = (to.meta.title || 'Oldal') + ' - Kölcsönző'
 
     const isLoggedIn = !!localStorage.getItem('role')
