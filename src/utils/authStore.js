@@ -1,38 +1,34 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import apiHandler from "./apiHandler";
+import router from "@/router";
 
-/*
-    Composable függvény: sima függvény reaktív elemekkel.
-*/
-export const useAuthStore = defineStore('auth', ()=> {
-    /*
-        User adatok tárolása.
-    */
+export const useAuthStore = defineStore('auth', () => {
+
     const user = ref(null);
     const loading = ref(false);
     const errors = ref({});
 
-    /*
-        Be van-e jelentkezve a felhasználó vagy sem.
-    */
-    const isAuthenticated = computed(()=>!!user.value);
-    const isAdmin = computed(()=>user.value?.is_admin === true);
+    const isAuthenticated = computed(() => !!user.value);
+    const isAdmin = computed(() => user.value?.is_admin === 1);
 
     async function login(payload) {
-        /*
-            elkezdünk loadingolni
-        */
         loading.value = true;
-
         errors.value = {};
 
         try {
-            const data = await apiHandler.login(payload);
-            user.value = data.user;
-        } catch(err) {
-            errors.value = err.response?.errors ?? {};
-            //errors.value = err.response?.errors ? err.response?.errors : {};
+            await apiHandler.login(payload);
+            user.value = await apiHandler.me();
+
+            // 🔥 ADMIN AUTOMATIKUS ÁTIRÁNYÍTÁS
+            if (user.value?.is_admin === 1) {
+                router.push("/admin/users");
+            } else {
+                router.push("/app/home");
+            }
+
+        } catch (err) {
+            errors.value = err.response?.data?.errors ?? {};
         } finally {
             loading.value = false;
         }
@@ -43,18 +39,41 @@ export const useAuthStore = defineStore('auth', ()=> {
         errors.value = {};
 
         try {
-            const data = await apiHandler.register(payload);
-            user.value = data.user;
-        } catch(err) {
-            errors.value = err.response?.errors ?? {};
+            await apiHandler.register(payload);
+            user.value = await apiHandler.me();
+            router.push("/app/home");
+        } catch (err) {
+            errors.value = err.response?.data?.errors ?? {};
         } finally {
             loading.value = false;
         }
     }
 
-    return {
-        user, loading,
-        errors, login,
-        register
+    async function fetchUser() {
+        try {
+            user.value = await apiHandler.me();
+        } catch {
+            user.value = null;
+        }
     }
+
+    async function logout() {
+        try {
+            await apiHandler.logout();
+        } catch {}
+        user.value = null;
+        router.push("/");
+    }
+
+    return {
+        user,
+        loading,
+        errors,
+        isAuthenticated,
+        isAdmin,
+        login,
+        register,
+        fetchUser,
+        logout
+    };
 });
