@@ -1,44 +1,57 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../utils/authStore'
 
+// Auth views
 import LoginView from "@/views/auth/LoginView.vue";
 import RegisterView from "@/views/auth/RegisterView.vue";
 
-import LendingView from "@/views/public/LendingView.vue";
+// Public views
+import HomeView from "@/views/public/HomeView.vue";
+import InstrumentsView from "@/views/public/InstrumentsView.vue";
+import InstrumentDetailsView from "@/views/public/InstrumentDetailsView.vue";
 
+
+import AppLendingView from "@/components/lending/LendingView.vue";
+
+// Admin views
 import AdminLendingListView from "@/views/app/LendingListView.vue";
 import AdminLendingDetailsView from "@/views/app/LendingDetailsView.vue";
 import AdminProfileView from "@/views/app/ProfileView.vue";
 import AdminSettingsView from "@/views/app/SettingsView.vue";
+import AdminUserView from "@/views/app/admin/AdminUserView.vue";
 
+// Layouts
 const PublicLayout = () => import("@/components/layouts/PublicLayout.vue");
 const AuthLayout = () => import('@/components/layouts/AuthLayout.vue');
 const AppLayout = () => import('@/components/layouts/AppLayout.vue');
 
+import AdminLayout from "@/components/layouts/AdminLayout.vue";
+
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
+
         {
             path: '/',
             component: PublicLayout,
             children: [
                 {
-                    path: '/',
+                    path: '',
                     name: 'home',
-                    component: () => import("@/views/public/HomeView.vue"),
+                    component: HomeView,
                     meta: { title: 'Kezdőlap' }
                 },
                 {
                     path: 'instruments',
                     name: 'instruments',
-                    component: () => import("@/views/public/InstrumentsView.vue"),
+                    component: InstrumentsView,
                     meta: { title: 'Hangszerek' }
                 },
                 {
                     path: 'instruments/:id',
                     name: 'instrument-details',
                     props: true,
-                    component: () => import("@/views/public/InstrumentDetailsView.vue"),
+                    component: InstrumentDetailsView,
                     meta: { title: 'Részletek' }
                 }
             ]
@@ -70,9 +83,25 @@ const router = createRouter({
             meta: { requiresAuth: true },
             children: [
                 {
+                    path: 'home',
+                    name: 'app-home',
+                    component: HomeView
+                },
+                {
+                    path: 'instruments',
+                    name: 'app-instruments',
+                    component: InstrumentsView
+                },
+                {
+                    path: 'instruments/:id',
+                    name: 'app-instrument-details',
+                    props: true,
+                    component: () => import("@/views/public/InstrumentDetailsView.vue")
+                },
+                {
                     path: 'lendings',
                     name: 'lendings',
-                    component: LendingView,
+                    component: AppLendingView,
                     meta: { title: 'Kölcsönzéseim' }
                 }
             ]
@@ -80,9 +109,15 @@ const router = createRouter({
 
         {
             path: '/admin',
-            component: AppLayout,
+            component: AdminLayout,
             meta: { requiresAuth: true, requiresAdmin: true },
             children: [
+                {
+                    path: 'users',
+                    name: 'admin-users',
+                    component: AdminUserView,
+                    meta: { title: 'Felhasználók' }
+                },
                 {
                     path: 'lendings',
                     name: 'admin-lendings',
@@ -111,6 +146,7 @@ const router = createRouter({
             ]
         },
 
+        // 404
         {
             path: '/:pathMatch(.*)*',
             name: 'not-found',
@@ -120,32 +156,40 @@ const router = createRouter({
     ]
 })
 
-/*
-    Rányomunk egy linkre, és mielőtt átirányít minket
-    a rendszer, a beforeEach lefut.
-*/
-router.beforeEach((to, from) => {
-    const auth = useAuthStore()
-    console.log(auth.user)
 
-    document.title = (to.meta.title || 'Oldal') + ' - Kölcsönző'
+router.beforeEach(async (to, from) => {
+    const auth = useAuthStore();
 
-    const isLoggedIn = !!localStorage.getItem('role')
-    const isAdmin = localStorage.getItem('role') === 'admin'
-
-    if (to.meta.requiresAuth && !isLoggedIn) {
-        return { name: 'login' }
+    if (to.meta.requiresAuth && !auth.user) {
+        try {
+            await auth.fetchUser();
+        } catch {}
     }
 
+    const isLoggedIn = !!auth.user;
+    const isAdmin = auth.user?.is_admin === 1;
+
     if (to.meta.requiresAdmin && !isAdmin) {
-        return { name: 'home' }
+        return { name: 'app-home' };
+    }
+
+    if (isAdmin && to.path.startsWith('/app')) {
+        return { name: 'admin-users' };
+    }
+
+    if (to.meta.requiresAuth && !isLoggedIn) {
+        return { name: 'login' };
     }
 
     if (to.meta.guest && isLoggedIn) {
-        return { name: 'home' }
+        return isAdmin
+            ? { name: 'admin-users' }
+            : { name: 'app-home' };
     }
 
-    return true
-})
+    return true;
+});
 
-export default router
+
+
+export default router;
