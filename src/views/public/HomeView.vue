@@ -1,6 +1,16 @@
 <script>
+import { useAuthStore } from "@/utils/authStore";
+
 export default {
-  name: "HomeView"
+  name: "HomeView",
+
+  setup() {
+    const auth = useAuthStore();
+    const isLoggedIn = !!auth.user;
+
+    return { isLoggedIn };
+  }
+
 }
 </script>
 
@@ -12,12 +22,14 @@ export default {
         <p class="lead mb-4">
           Bérelj profi hangszereket gyorsan és megfizethető áron.
         </p>
-        <router-link
-            to="/hangszerek"
+        <RouterLink
+            :to="isLoggedIn ? '/app/instruments' : '/instruments'"
             class="btn btn-warning btn-lg px-4 py-2 fw-semibold"
+
         >
           Böngéssz hangszereket
-        </router-link>
+        </RouterLink>
+
       </div>
     </section>
     <section class="py-5 bg-light">
@@ -53,11 +65,13 @@ export default {
         <h2 class="fw-bold mb-3">Készen állsz a zenére?</h2>
         <p class="lead mb-4">Regisztrálj és kezdj el hangszereket kölcsönözni még ma.</p>
         <router-link
-            to="/register"
-            class="btn btn-primary btn-lg px-4 py-2"
+            :to="isLoggedIn ? '/app/home' : '/auth/register'"
+            class="btn btn-warning btn-lg px-4 py-2 fw-semibold"
+
         >
-          Regisztráció
+          {{ isLoggedIn ? 'Fiókom' : 'Regisztráció' }}
         </router-link>
+
       </div>
     </section>
   </div>
