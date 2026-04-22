@@ -5,19 +5,8 @@ import api from "@/utils/http.js";
 export default {
   name: "PublicLayout",
   components: { RouterLink, RouterView },
-  data() {
-    return {
-      categories: []
-    }
-  },
-  async mounted() {
-    try {
-      const response = await api.get('api/instrument_categories')
-      this.categories = response.data
-    } catch (e) {
-      console.warn('Kategóriák betöltése sikertelen')
-    }
-  }
+
+
 }
 </script>
 
@@ -38,9 +27,6 @@ export default {
             </li>
             <li class="nav-item">
               <RouterLink class="nav-link" to="/instruments">Hangszerek</RouterLink>
-            </li>
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/rentals">Kölcsönzéseim</RouterLink>
             </li>
           </ul>
 
