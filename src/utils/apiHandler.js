@@ -2,20 +2,28 @@ import api from "./http";
 
 const apiHandler = {
     async csrf() {
-        /*
-            Elég csak egyszer az app indításakor meghívni.
-        */
         await api.get('/sanctum/csrf-cookie');
     },
-    async me() {
 
+    async login(payload) {
+        await this.csrf();
+        const { data } = await api.post('/api/login', payload);
+        return data;
     },
+
     async register(payload) {
+        await this.csrf();
         const { data } = await api.post('/api/register', payload);
         return data;
     },
-    async login(payload) {
-        const { data } = await api.post('/api/login', payload);
+
+    async logout() {
+        await this.csrf();
+        await api.post('/api/logout');
+    },
+
+    async me() {
+        const { data } = await api.get('/api/me');
         return data;
     }
 };
