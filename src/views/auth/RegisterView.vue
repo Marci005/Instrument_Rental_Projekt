@@ -19,15 +19,20 @@ export default {
     async register() {
       try {
         await apiHandler.csrf();
-        const response = await apiHandler.register(JSON.stringify(this.form));
-        console.log(response);
 
-      } catch(err) {
-        console.log(err.response.data.errors);
-      } finally {
+        const response = await apiHandler.register(this.form);
 
+        console.log("Sikeres regisztráció:", response);
+
+
+
+        this.$router.push('/auth/login');
+
+      } catch (err) {
+        console.log(err.response?.data?.errors);
       }
     }
+
   }
 }
 </script>
