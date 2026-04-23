@@ -56,25 +56,25 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-Route::get('/instrument_brands', [InstrumentBrandController::class, 'index']);
-Route::get('/instrument_brands/{brand}', [InstrumentBrandController::class, 'show']);
+Route::get('/instrument-brands', [InstrumentBrandController::class, 'index']);
+Route::get('/instrument-brands/{brand}', [InstrumentBrandController::class, 'show']);
 
 Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
-    Route::post('/instrument_brands', [InstrumentBrandController::class, 'store']);
-    Route::put('/instrument_brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
-    Route::patch('/instrument_brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
-    Route::delete('/instrument_brands', [InstrumentBrandController::class, 'destroy']);
+    Route::post('/instrument-brands', [InstrumentBrandController::class, 'store']);
+    Route::put('/instrument-brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
+    Route::patch('/instrument-brands/{InstrumentBrand}', [InstrumentBrandController::class, 'update']);
+    Route::delete('/instrument-brands', [InstrumentBrandController::class, 'destroy']);
 });
 
 
-Route::get('/instrument_categories', [InstrumentCategoryController::class, 'index']);
-Route::get('/instrument_categories/{category}', [InstrumentCategoryController::class, 'show']);
+Route::get('/instrument-categories', [InstrumentCategoryController::class, 'index']);
+Route::get('/instrument-categories/{category}', [InstrumentCategoryController::class, 'show']);
 
 Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
-    Route::post('/instrument_categories', [InstrumentCategoryController::class, 'store']);
-    Route::put('/instrument_categories/{InstrumentCategory}', [InstrumentCategoryController::class, 'update']);
-    Route::patch('/instrument_categories/{InstrumentCategory}', [InstrumentCategoryController::class, 'update']);
-    Route::delete('/instrument_categories', [InstrumentCategoryController::class, 'destroy']);
+    Route::post('/instrument-categories', [InstrumentCategoryController::class, 'store']);
+    Route::put('/instrument-categories/{InstrumentCategory}', [InstrumentCategoryController::class, 'update']);
+    Route::patch('/instrument-categories/{InstrumentCategory}', [InstrumentCategoryController::class, 'update']);
+    Route::delete('/instrument-categories', [InstrumentCategoryController::class, 'destroy']);
 });
 
 Route::get('/instruments',             [InstrumentController::class, 'index']);
