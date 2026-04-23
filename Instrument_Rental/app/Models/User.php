@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -29,6 +30,7 @@ class User extends Authenticatable
     protected $fillable = [
         'first_name',
         'last_name',
+        'title',
         'email',
         'password',
     ];
@@ -65,4 +67,16 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Connects the User model to the Rent model with a HasMany relation.
+     * One user can have many rents.
+     *
+     * @return HasMany
+     */
+    public function rents(): HasMany
+    {
+        return $this->hasMany(Rent::class);
+    }
 }
+
