@@ -16,13 +16,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->enum('address_type', ['számlázási', 'szállítási', 'mindkettő'])->nullable(false);
-            $table->integer('zip', 50)->nullable(false);
+            $table->integer('zip')->nullable(false);
             $table->string('settlement', 100)->nullable(false);
             $table->string('street', 100)->nullable(false);
             $table->string('street_type', 30)->nullable(false);
             $table->string('house_number', 100)->nullable(false);
-            $table->smallInteger('floor_number', 20)->nullable();
-            $table->smallInteger('door_number', 20)->nullable();
+            $table->smallInteger('floor_number')->nullable();
+            $table->smallInteger('door_number')->nullable();
             $table->timestamps();
 
 
