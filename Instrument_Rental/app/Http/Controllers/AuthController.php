@@ -30,7 +30,7 @@ class AuthController extends Controller
         $data = $request->validate([
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => ['required', 'confirmed', Password::min(8)],
-            'title' => 'required|in:Úr,Hölgy, Dr., Professzor',
+            'title' => 'required|in:Úr,Hölgy,Dr.,Professzor',
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
         ]);
