@@ -8,9 +8,9 @@ import RegisterView from "@/views/auth/RegisterView.vue";
 // Public views
 import HomeView from "@/views/public/HomeView.vue";
 import InstrumentsView from "@/views/public/InstrumentsView.vue";
+
+// App views
 import InstrumentDetailsView from "@/views/public/InstrumentDetailsView.vue";
-
-
 import AppLendingView from "@/components/lending/LendingView.vue";
 
 // Admin views
@@ -24,13 +24,13 @@ import AdminUserView from "@/views/app/admin/AdminUserView.vue";
 const PublicLayout = () => import("@/components/layouts/PublicLayout.vue");
 const AuthLayout = () => import('@/components/layouts/AuthLayout.vue');
 const AppLayout = () => import('@/components/layouts/AppLayout.vue');
-
 import AdminLayout from "@/components/layouts/AdminLayout.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
 
+        // PUBLIC
         {
             path: '/',
             component: PublicLayout,
@@ -47,16 +47,18 @@ const router = createRouter({
                     component: InstrumentsView,
                     meta: { title: 'Hangszerek' }
                 },
+
+                // ❗ Publikus részletező → automatikus átirányítás az APP verzióra
                 {
                     path: 'instruments/:id',
-                    name: 'instrument-details',
-                    props: true,
-                    component: InstrumentDetailsView,
-                    meta: { title: 'Részletek' }
+                    redirect: (to) => {
+                        return { name: 'app-instrument-details', params: to.params }
+                    }
                 }
             ]
         },
 
+        // AUTH
         {
             path: '/auth',
             component: AuthLayout,
@@ -77,6 +79,7 @@ const router = createRouter({
             ]
         },
 
+        // APP (bejelentkezett felhasználók)
         {
             path: '/app',
             component: AppLayout,
@@ -96,7 +99,7 @@ const router = createRouter({
                     path: 'instruments/:id',
                     name: 'app-instrument-details',
                     props: true,
-                    component: () => import("@/views/public/InstrumentDetailsView.vue")
+                    component: InstrumentDetailsView
                 },
                 {
                     path: 'lendings',
@@ -107,6 +110,7 @@ const router = createRouter({
             ]
         },
 
+        // ADMIN
         {
             path: '/admin',
             component: AdminLayout,
@@ -157,6 +161,7 @@ const router = createRouter({
 })
 
 
+// ⭐ ROUTER GUARD
 router.beforeEach(async (to, from) => {
     const auth = useAuthStore();
 
@@ -189,7 +194,5 @@ router.beforeEach(async (to, from) => {
 
     return true;
 });
-
-
 
 export default router;
