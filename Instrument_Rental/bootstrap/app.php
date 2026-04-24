@@ -13,9 +13,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
 
-    ->withMiddleware(function (Middleware $middleware) {
+    ->withMiddleware(function (Middleware $middleware): void {
+        // Enable session-based authentication for SPA (Sanctum stateful API)
+        $middleware->statefulApi();
+
+        // Register custom middleware aliases
         $middleware->alias([
-            'is_admin' => IsAdmin::class,
+            'is_admin' => \App\Http\middleware\IsAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
