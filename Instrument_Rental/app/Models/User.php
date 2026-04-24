@@ -33,6 +33,7 @@ class User extends Authenticatable
         'title',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -44,7 +45,6 @@ class User extends Authenticatable
      */
 
     protected $hidden = [
-        'is_admin',
         'password',
         'remember_token',
     ];
@@ -56,6 +56,7 @@ class User extends Authenticatable
      *
      * - email_verified_at: converted to a datetime object
      * - password: automatically hashed when set
+     * - is_admin: returned as an integer (0 or 1) for consistent frontend checks
      *
      * @return array<string, string>
      */
@@ -65,6 +66,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'integer',
         ];
     }
 
@@ -79,4 +81,3 @@ class User extends Authenticatable
         return $this->hasMany(Rent::class);
     }
 }
-
