@@ -60,11 +60,12 @@ export default {
     <b class="d-block">Megszólítás</b>
     <select v-model="form.title"
             class="form-control form-control-sm">
-      <option value="-">válassz megszólítást</option>
+      <option disabled value="">válassz megszólítást</option>
       <option value="Úr">Úr</option>
       <option value="Hölgy">Hölgy</option>
-      <option value="Dr">Dr</option>
-      <option value="Prof">Prof</option>
+      <option value="Dr.">Dr.</option>
+      <option value="Professzor">Professzor</option>
+
     </select>
 
     <b class="d-block">Vezetéknév</b>
