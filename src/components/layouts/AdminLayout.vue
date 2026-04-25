@@ -8,6 +8,9 @@ export default {
     const auth = useAuthStore();
     const router = useRouter();
 
+    /**
+     * Logs out the current user and redirects to the public home page.
+     */
     async function logout() {
       await auth.logout();
       router.push('/');
@@ -46,23 +49,16 @@ export default {
                 Felhasználók
               </RouterLink>
             </li>
-
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/admin/lendings">
-                Kölcsönzések
-              </RouterLink>
-            </li>
-
-            <li class="nav-item">
-              <RouterLink class="nav-link" to="/admin/settings">
-                Beállítások
+              <RouterLink class="nav-link" to="/admin/instruments/new">
+                Hangszer felvitel
               </RouterLink>
             </li>
 
           </ul>
 
           <div class="d-flex gap-2">
-            <button class="btn btn-danger btn-sm" @click="logout">
+            <button class="btn btn-outline-light btn-sm logout-btn" @click="logout">
               Kijelentkezés
             </button>
           </div>
@@ -70,7 +66,8 @@ export default {
 
       </div>
     </nav>
-    <!-- ADMIN OLDAL TARTALMA -->
+
+    <!-- ADMIN PAGE CONTENT -->
     <main class="admin-content">
       <RouterView />
     </main>
@@ -85,40 +82,21 @@ export default {
   min-height: 100vh;
 }
 
-.admin-nav {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  background: #222;
-  padding: 15px 25px;
-}
-
-.admin-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.admin-nav a:hover {
-  text-decoration: underline;
-}
-
-.logout-btn {
-  margin-left: auto;
-  background: #ff4444;
-  border: none;
-  padding: 8px 14px;
-  color: white;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.logout-btn:hover {
-  background: #cc0000;
-}
-
 .admin-content {
   padding: 20px;
   flex: 1;
+}
+
+/* Logout button — neutral styling, not red */
+.logout-btn {
+  color: #cccccc;
+  border-color: #666;
+  background: transparent;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: #888;
 }
 </style>
