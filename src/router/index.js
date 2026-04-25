@@ -17,8 +17,9 @@ import AppLendingView from "@/components/lending/LendingView.vue";
 import AdminLendingListView from "@/views/app/LendingListView.vue";
 import AdminLendingDetailsView from "@/views/app/LendingDetailsView.vue";
 import AdminProfileView from "@/views/app/ProfileView.vue";
-import AdminSettingsView from "@/views/app/SettingsView.vue";
 import AdminUserView from "@/views/app/admin/AdminUserView.vue";
+import AdminUserRentsView from "@/views/app/admin/AdminUserRentsView.vue";
+import InstrumentFormView from "@/views/app/admin/InstrumentFormView.vue";
 
 // Layouts
 const PublicLayout = () => import("@/components/layouts/PublicLayout.vue");
@@ -48,7 +49,7 @@ const router = createRouter({
                     meta: { title: 'Hangszerek' }
                 },
 
-                // ❗ Publikus részletező → automatikus átirányítás az APP verzióra
+                // Public details page → automatically redirects to the APP version
                 {
                     path: 'instruments/:id',
                     redirect: (to) => {
@@ -79,7 +80,7 @@ const router = createRouter({
             ]
         },
 
-        // APP (bejelentkezett felhasználók)
+        // APP (authenticated users)
         {
             path: '/app',
             component: AppLayout,
@@ -123,6 +124,13 @@ const router = createRouter({
                     meta: { title: 'Felhasználók' }
                 },
                 {
+                    path: 'users/:id/rents',
+                    name: 'admin-user-rents',
+                    component: AdminUserRentsView,
+                    props: true,
+                    meta: { title: 'Felhasználó kölcsönzései' }
+                },
+                {
                     path: 'lendings',
                     name: 'admin-lendings',
                     component: AdminLendingListView,
@@ -142,10 +150,10 @@ const router = createRouter({
                     meta: { title: 'Profil' }
                 },
                 {
-                    path: 'settings',
-                    name: 'admin-settings',
-                    component: AdminSettingsView,
-                    meta: { title: 'Beállítások' }
+                    path: 'instruments/new',
+                    name: 'admin-instrument-new',
+                    component: InstrumentFormView,
+                    meta: { title: 'Hangszer felvitel' }
                 }
             ]
         },
@@ -161,7 +169,13 @@ const router = createRouter({
 })
 
 
-// ⭐ ROUTER GUARD
+/**
+ * Global router guard.
+ *
+ * Ensures protected routes require authentication, redirects admins away from
+ * the regular /app area into /admin, and prevents logged-in users from visiting
+ * guest-only routes like /auth/login.
+ */
 router.beforeEach(async (to, from) => {
     const auth = useAuthStore();
 
