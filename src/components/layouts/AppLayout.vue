@@ -1,14 +1,11 @@
 <!--
   @file AppLayout.vue
   @description Layout shell for authenticated regular-user pages (/app/*).
-
   Renders a Bootstrap dark navbar with:
     - Brand link to the public home
     - Nav links: Home, Instruments, My Rentals
-    - Logout button (red) that calls auth.logout() from the Pinia store
-
+    - Logout button (neutral styling) that calls auth.logout() from the Pinia store
   The <RouterView /> below the navbar renders the current /app/* child route.
-
   Access control (requiresAuth) is enforced by the router guard — this
   layout does not re-check auth itself. Admins are automatically redirected
   away from /app/* by the beforeEach guard in router/index.js.
@@ -18,7 +15,7 @@ import { useAuthStore } from "@/utils/authStore";
 import { RouterLink, RouterView, useRouter } from "vue-router";
 
 export default {
-  name:"AppLayout",
+  name: "AppLayout",
   setup() {
     const auth   = useAuthStore();
     const router = useRouter();
@@ -26,8 +23,6 @@ export default {
     /**
      * Logs out the user via the Pinia auth store (which clears the user ref
      * and calls the backend logout endpoint), then redirects to the public home.
-     * The store's logout() already calls router.push('/'), but the explicit push
-     * here acts as a defensive fallback.
      */
     async function logout() {
       await auth.logout();
@@ -64,14 +59,15 @@ export default {
               <RouterLink class="nav-link" to="/app/instruments">Hangszerek</RouterLink>
             </li>
             <li class="nav-item">
-              <!-- Link to the user's active rental list -->
               <RouterLink class="nav-link" to="/app/lendings">Kölcsönzéseim</RouterLink>
             </li>
           </ul>
 
-          <!-- Right-aligned logout button -->
+          <!-- Right-aligned logout button (neutral styling) -->
           <div class="d-flex gap-2">
-            <button class="btn btn-danger btn-sm" @click="logout">Kijelentkezés</button>
+            <button class="btn btn-outline-light btn-sm logout-btn" @click="logout">
+              Kijelentkezés
+            </button>
           </div>
 
         </div>
@@ -82,3 +78,18 @@ export default {
     <RouterView />
   </div>
 </template>
+
+<style scoped>
+/* Logout button — neutral colour, not red */
+.logout-btn {
+  color: #cccccc;
+  border-color: #666;
+  background: transparent;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: #888;
+}
+</style>

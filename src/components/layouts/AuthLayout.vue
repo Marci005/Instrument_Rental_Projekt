@@ -33,6 +33,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f8f9fa; /* Bootstrap $gray-100 — neutral light background */
+  background: #141110;
 }
 </style>
