@@ -42,158 +42,87 @@ class InstrumentSeeder extends Seeder
             //  1. AKUSZTIKUS GITÁR  (category_id: 1)
             // ════════════════════════════════════════════════════════════════════
 
+
+
             [
                 'category_id'   => 1,
-                'brand_id'      => 1,   // Yamaha
+                'brand_id'      => 1,
                 'condition'     => 'Használt',
                 'title'         => 'Yamaha F310',
                 'description'   => 'Kiváló belépő szintű dreadnought gitár, tömör lucfenyő tetőlappal.',
                 'monthly_price' => 6000,
                 'deposit'       => 15000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.KV_9oRgN5yEIOaLeFq9h8wHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 1,
-                'brand_id'      => 2,   // Fender
+                'brand_id'      => 2,
                 'condition'     => 'Használt',
                 'title'         => 'Fender CD-60',
                 'description'   => 'Gazdag, meleg hangzású dreadnought gitár, kezdőknek és haladóknak egyaránt.',
                 'monthly_price' => 7000,
                 'deposit'       => 18000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.FDncGMlUnYI_lM1xwuosoAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 1,
-                'brand_id'      => 3,   // Ibanez
+                'brand_id'      => 3,
                 'condition'     => 'Használt',
                 'title'         => 'Ibanez V50',
                 'description'   => 'Klasszikus dreadnought forma, könnyű játszhatóság, kezdők számára ideális.',
                 'monthly_price' => 6500,
                 'deposit'       => 16000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.Y1n-NPP4Uk91vI6AqYi86gHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 1,
-                'brand_id'      => 5,   // Cort
-                'condition'     => 'Használt',
-                'title'         => 'Cort AD810',
-                'description'   => 'Megbízható belépő szintű akusztikus gitár, természetes befejezéssel.',
-                'monthly_price' => 6000,
-                'deposit'       => 15000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 6,   // Takamine
-                'condition'     => 'Újszerű',
-                'title'         => 'Takamine GD11M',
-                'description'   => 'Mahagóni tetőlapú dreadnought gitár, kiváló rezonancia és tónusmélység.',
-                'monthly_price' => 8000,
-                'deposit'       => 20000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 7,   // Epiphone
-                'condition'     => 'Használt',
-                'title'         => 'Epiphone DR-100',
-                'description'   => 'Könnyű, barátságos akusztikus gitár, természetes és sunburst kivitelben.',
-                'monthly_price' => 6500,
-                'deposit'       => 17000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 8,   // Harley Benton
-                'condition'     => 'Használt',
-                'title'         => 'Harley Benton D-120CE',
-                'description'   => 'Elektroakusztikus dreadnought cutaway gitár, beépített hangszedővel.',
-                'monthly_price' => 5500,
-                'deposit'       => 14000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 9,   // Sigma
-                'condition'     => 'Újszerű',
-                'title'         => 'Sigma DM-ST',
-                'description'   => 'Természetes felületkezelésű solid top dreadnought, kiemelkedő hangminőség.',
-                'monthly_price' => 9000,
-                'deposit'       => 22000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
-                'title'         => 'Yamaha FG800',
-                'description'   => 'Solid spruce tetőlapú dreadnought, Yamaha megbízhatóságával.',
-                'monthly_price' => 7500,
-                'deposit'       => 19000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 3,   // Ibanez
-                'condition'     => 'Újszerű',
-                'title'         => 'Ibanez AW54',
-                'description'   => 'All-mahogany artwood sorozat, meleg és tömör hangzásvilág.',
-                'monthly_price' => 8500,
-                'deposit'       => 21000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Használt',
-                'title'         => 'Yamaha FS800',
-                'description'   => 'Kisebb concert méretű gitár, solid spruce tetőlappal, kényelmes játszhatóság.',
-                'monthly_price' => 7000,
-                'deposit'       => 18000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 2,   // Fender
-                'condition'     => 'Újszerű',
-                'title'         => 'Fender PM-1 Standard',
-                'description'   => 'Prémium dreadnought, solid sitka spruce tetőlap, mahagóni oldal és hát.',
-                'monthly_price' => 11000,
-                'deposit'       => 30000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 3,   // Ibanez
-                'condition'     => 'Újszerű',
-                'title'         => 'Ibanez PF15ECE',
-                'description'   => 'Elektroakusztikus dreadnought cutaway, Fishman Sonicore hangszedővel.',
-                'monthly_price' => 8500,
-                'deposit'       => 22000,
-            ],
-            [
-                'category_id'   => 1,
-                'brand_id'      => 5,   // Cort
+                'brand_id'      => 5,
                 'condition'     => 'Újszerű',
                 'title'         => 'Cort Earth70',
                 'description'   => 'Solid spruce tetőlapú dreadnought, kiváló ár-érték arány.',
                 'monthly_price' => 8000,
                 'deposit'       => 20000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.mkA6JorOeqGx1yIVjwNKzwHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 1,
-                'brand_id'      => 9,   // Sigma
+                'brand_id'      => 6,
                 'condition'     => 'Újszerű',
-                'title'         => 'Sigma 000M-15',
-                'description'   => 'All-solid mahagóni 000-as méret, vintage karakter és telt tónus.',
-                'monthly_price' => 10000,
-                'deposit'       => 27000,
+                'title'         => 'Takamine GD11M',
+                'description'   => 'Mahagóni tetőlapú dreadnought gitár, kiváló rezonancia és tónusmélység.',
+                'monthly_price' => 8000,
+                'deposit'       => 20000,
+                'image'         => 'https://ts3.explicit.bing.net/th?id=OIP.Gu0VD3IAjst54p4crKng_wHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 1,
-                'brand_id'      => 2,   // Fender
-                'condition'     => 'Újszerű',
-                'title'         => 'Fender Malibu Player',
-                'description'   => 'Compact auditorium akusztikus gitár, kényelmes méret és élénk hangzás.',
-                'monthly_price' => 9500,
-                'deposit'       => 25000,
+                'brand_id'      => 7,
+                'condition'     => 'Használt',
+                'title'         => 'Epiphone DR-100',
+                'description'   => 'Könnyű, barátságos akusztikus gitár, természetes és sunburst kivitelben.',
+                'monthly_price' => 6500,
+                'deposit'       => 17000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.yTodjplIDs6AfVRnULqEsgHaKT&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 1,
-                'brand_id'      => 3,   // Ibanez
+                'brand_id'      => 8,
+                'condition'     => 'Használt',
+                'title'         => 'Harley Benton D-120CE',
+                'description'   => 'Elektroakusztikus dreadnought cutaway gitár, beépített hangszedővel.',
+                'monthly_price' => 5500,
+                'deposit'       => 14000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.9OuDj1I1K2jMcCSW6pIg4gHaJ4&pid=15.1&o=7&rm=3',
+            ],
+            [
+                'category_id'   => 1,
+                'brand_id'      => 9,
                 'condition'     => 'Újszerű',
-                'title'         => 'Ibanez AEG50',
-                'description'   => 'Elektroakusztikus cutaway, vékony test, Fishman Sonicore hangszedő, kényelmes.',
-                'monthly_price' => 8500,
-                'deposit'       => 23000,
+                'title'         => 'Sigma DM-ST',
+                'description'   => 'Természetes felületkezelésű solid top dreadnought, kiemelkedő hangminőség.',
+                'monthly_price' => 9000,
+                'deposit'       => 22000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.Sujyr509WVgTk-ZLqFZdEwHaHa&pid=15.1&o=7&rm=3',
             ],
 
             // ════════════════════════════════════════════════════════════════════
@@ -202,168 +131,67 @@ class InstrumentSeeder extends Seeder
 
             [
                 'category_id'   => 2,
-                'brand_id'      => 4,   // Casio
+                'brand_id'      => 4,
                 'condition'     => 'Újszerű',
                 'title'         => 'Casio CDP-S110',
                 'description'   => 'Kompakt 88 billentyűs digitális zongora, kezdőknek ideális.',
                 'monthly_price' => 12000,
                 'deposit'       => 30000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.jk4Tb8KeeL6mJPyKLJcy9wHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 2,
-                'brand_id'      => 10,  // Roland
+                'brand_id'      => 10,
                 'condition'     => 'Újszerű',
                 'title'         => 'Roland FP-10',
-                'description'   => 'Hordozható 88 billentyűs Roland, PHA-4 Standard mechanika, autentikus érzet.',
+                'description'   => 'Hordozható 88 billentyűs Roland, PHA-4 Standard mechanika.',
                 'monthly_price' => 13000,
                 'deposit'       => 35000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.pnsVAMzEQ8kEpns5REIVMwHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 2,
-                'brand_id'      => 1,   // Yamaha
+                'brand_id'      => 1,
                 'condition'     => 'Újszerű',
                 'title'         => 'Yamaha P-45',
-                'description'   => '88 kalapácsos billentyűzet, tiszta Yamaha hangminőség, kompakt dizájn.',
+                'description'   => '88 kalapácsos billentyűzet, tiszta Yamaha hangminőség.',
                 'monthly_price' => 12500,
                 'deposit'       => 28000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.IcCQnebXxeXGxxH4Gr-wxgHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 2,
-                'brand_id'      => 11,  // Korg
+                'brand_id'      => 11,
                 'condition'     => 'Újszerű',
                 'title'         => 'Korg B2',
-                'description'   => '88 billentyűs Korg, Natural Weighted Hammer Action, 12 hangszín.',
+                'description'   => '88 billentyűs Korg digitális zongora.',
                 'monthly_price' => 11000,
                 'deposit'       => 28000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.04Xo95ECGL5oRQDVFOcDHwHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 2,
-                'brand_id'      => 10,  // Roland
-                'condition'     => 'Újszerű',
-                'title'         => 'Roland FP-30X',
-                'description'   => 'Fejlett PHA-4 Standard mechanika, SuperNATURAL hangminta, Bluetooth.',
-                'monthly_price' => 15000,
-                'deposit'       => 40000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 4,   // Casio
-                'condition'     => 'Újszerű',
-                'title'         => 'Casio PX-S1100',
-                'description'   => 'Slim line Privia sorozat, 88 kalapácsos billentyű, hangstúdió funkciók.',
-                'monthly_price' => 14000,
-                'deposit'       => 38000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
-                'title'         => 'Yamaha P-125',
-                'description'   => 'GHW mechanika, Pure CF hangminta, kiemelkedő hangminőség hordozható testben.',
-                'monthly_price' => 16000,
-                'deposit'       => 42000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 12,  // Kawai
+                'brand_id'      => 12,
                 'condition'     => 'Új',
                 'title'         => 'Kawai ES110',
-                'description'   => 'Responsive Hammer Compact mechanika, 88 billentyű, kiváló játékérzet.',
+                'description'   => 'Responsive Hammer Compact mechanika.',
                 'monthly_price' => 15500,
                 'deposit'       => 41000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.rq2m1CR1Oc69GCa4FongUwHaG2&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 2,
-                'brand_id'      => 4,   // Casio
+                'brand_id'      => 4,
                 'condition'     => 'Újszerű',
-                'title'         => 'Casio CDP-S360',
-                'description'   => 'Kompakt Casio, 700 hangszín, ritmusfunkciók és beépített effektek.',
-                'monthly_price' => 13500,
-                'deposit'       => 36000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 10,  // Roland
-                'condition'     => 'Újszerű',
-                'title'         => 'Roland GO:PIANO',
-                'description'   => 'Könnyű belépő szintű Roland, 61 billentyű, Bluetooth hangszórókapcsolat.',
-                'monthly_price' => 10000,
-                'deposit'       => 25000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
-                'title'         => 'Yamaha NP-32',
-                'description'   => '76 billentyűs piaggero sorozat, hordozható és könnyű, elemmel is működik.',
-                'monthly_price' => 9500,
-                'deposit'       => 24000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 10,  // Roland
-                'condition'     => 'Új',
-                'title'         => 'Roland FP-E50',
-                'description'   => 'Entertainers piano, akkord funkciók, 88 billentyű, PHA-4 Standard mechanika.',
-                'monthly_price' => 18000,
-                'deposit'       => 48000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
-                'title'         => 'Yamaha DGX-670',
-                'description'   => 'Grand piano érzet, CFX hangminta, automatikus kíséreti funkciókkal.',
-                'monthly_price' => 20000,
-                'deposit'       => 55000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 4,   // Casio
-                'condition'     => 'Új',
-                'title'         => 'Casio PX-770',
-                'description'   => 'Privia bútorstílusú zongora, 88 kalapácsos billentyű, 3 pedálos rendszer.',
-                'monthly_price' => 17000,
-                'deposit'       => 45000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 12,  // Kawai
-                'condition'     => 'Új',
-                'title'         => 'Kawai ES120',
-                'description'   => 'Újgenerációs Kawai portabilis, RHC mechanika, Bluetooth MIDI és audio.',
-                'monthly_price' => 17500,
-                'deposit'       => 47000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 10,  // Roland
-                'condition'     => 'Új',
-                'title'         => 'Roland FP-60X',
-                'description'   => 'Prémium portabilis Roland, PHA-50 mechanika, SuperNATURAL modellezés.',
-                'monthly_price' => 22000,
-                'deposit'       => 60000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
-                'title'         => 'Yamaha P-515',
-                'description'   => 'Csúcsminőségű hordozható Yamaha, GrandTouch-S mechanika, CFX és Bösendorfer hangminták.',
-                'monthly_price' => 25000,
-                'deposit'       => 70000,
-            ],
-            [
-                'category_id'   => 2,
-                'brand_id'      => 4,   // Casio
-                'condition'     => 'Új',
-                'title'         => 'Casio PC-S3100',
-                'description'   => 'Privia X sorozat, kalapácsos mechanika, 96 polifónia, fejlett hangminőség.',
-                'monthly_price' => 19000,
-                'deposit'       => 52000,
+                'title'         => 'Casio PX-S1100',
+                'description'   => 'Slim line Privia sorozat.',
+                'monthly_price' => 14000,
+                'deposit'       => 38000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.y0Ho_Nvy2hEBIFBNcceJiAHaF2&pid=15.1&o=7&rm=3',
             ],
 
-            // ════════════════════════════════════════════════════════════════════
+
+                // ════════════════════════════════════════════════════════════════════
             //  3. DOBFELSZERELÉS  (category_id: 3)
             // ════════════════════════════════════════════════════════════════════
 
@@ -375,156 +203,104 @@ class InstrumentSeeder extends Seeder
                 'description'   => 'Elektromos dobszett mesh dobfejekkel, csendes játék, kezdőknek ideális.',
                 'monthly_price' => 10000,
                 'deposit'       => 25000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.8oVZ09yiExnae9X0rMBuEAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 13,  // Alesis
                 'condition'     => 'Újszerű',
                 'title'         => 'Alesis Nitro Mesh Kit',
-                'description'   => '8 részes elektromos dobszett, 40 készlet, 385 hangszín, USB MIDI kimenet.',
+                'description'   => 'Elektromos dob mesh fejjel.',
                 'monthly_price' => 11000,
                 'deposit'       => 28000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.OCK5Jibq8WjKWPj29-JYJAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 10,  // Roland
                 'condition'     => 'Újszerű',
                 'title'         => 'Roland TD-1DMK',
-                'description'   => 'Roland belépő szintű elektromos dob, mesh dobfejek, kompakt rack rendszer.',
+                'description'   => 'Roland belépő szintű elektromos dob, mesh dobfejek.',
                 'monthly_price' => 14000,
                 'deposit'       => 38000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.yt85stDE0cTs-tzXEjXsywHaH7&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 1,   // Yamaha
                 'condition'     => 'Újszerű',
                 'title'         => 'Yamaha DTX402K',
-                'description'   => 'Yamaha DTX sorozat, 10 készlet, 287 hangszín, Training funkciókkal.',
+                'description'   => 'Yamaha DTX sorozat, 10 készlet, 287 hangszín.',
                 'monthly_price' => 12000,
                 'deposit'       => 30000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.a-DhvFjFZMA1oV7yCKLXrwHaGW&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 14,  // Millenium
                 'condition'     => 'Újszerű',
                 'title'         => 'Millenium MPS-850',
-                'description'   => 'Mesh pad elektromos dobszett, csendes játékfelület, haladó funkciók.',
+                'description'   => 'Mesh pad elektromos dobszett.',
                 'monthly_price' => 10500,
                 'deposit'       => 27000,
-            ],
-            [
-                'category_id'   => 3,
-                'brand_id'      => 10,  // Roland
-                'condition'     => 'Új',
-                'title'         => 'Roland TD-07DMK',
-                'description'   => 'Fejlett TD-07 modul, mesh dobfejek, Bluetooth, Steinberg Cubase AI.',
-                'monthly_price' => 16000,
-                'deposit'       => 42000,
-            ],
-            [
-                'category_id'   => 3,
-                'brand_id'      => 13,  // Alesis
-                'condition'     => 'Újszerű',
-                'title'         => 'Alesis Surge Mesh',
-                'description'   => '8 részes Surge Mesh Kit, 24 készlet, 60 track hangzókönyvtár.',
-                'monthly_price' => 12500,
-                'deposit'       => 32000,
-            ],
-            [
-                'category_id'   => 3,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
-                'title'         => 'Yamaha DTX6K-X',
-                'description'   => 'Professzionális DTX6 modul, silicon fejek, fejlett dob edzőprogram.',
-                'monthly_price' => 18000,
-                'deposit'       => 50000,
-            ],
-            [
-                'category_id'   => 3,
-                'brand_id'      => 10,  // Roland
-                'condition'     => 'Új',
-                'title'         => 'Roland TD-17KVX',
-                'description'   => 'TD-17 modul, V-Cymbal, mesh snare, prémium érzet és hangminőség.',
-                'monthly_price' => 22000,
-                'deposit'       => 60000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.QvadRfJL239sdCrptkJ-QwHaHT&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 13,  // Alesis
                 'condition'     => 'Újszerű',
                 'title'         => 'Alesis Command Mesh',
-                'description'   => '8 részes Command Mesh Kit, fejlett modul, 70+ készlet, USB MIDI.',
+                'description'   => 'Command Mesh Kit.',
                 'monthly_price' => 13000,
                 'deposit'       => 34000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.P_q9ENPhyZB_ni0BcI25VwHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 10,  // Roland
-                'condition'     => 'Új',
-                'title'         => 'Roland TD-27KV',
-                'description'   => 'Csúcs Roland TD-27 modul, V-Cymbal Pro, prémium mesh dobok, profik számára.',
-                'monthly_price' => 25000,
-                'deposit'       => 70000,
+                'condition'     => 'Újszerű',
+                'title'         => 'Roland TD-50KV2',
+                'description'   => 'Csúcsmodell.',
+                'monthly_price' => 30000,
+                'deposit'       => 85000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP._JvyDGgI_n2rPhxuPKpYqAHaFE&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
-                'title'         => 'Yamaha DTX8K',
-                'description'   => 'Csúcskategóriás DTX sorozat, DTX-PRO modul, 3 zónás dobfejek.',
-                'monthly_price' => 23000,
-                'deposit'       => 65000,
+                'condition'     => 'Újszerű',
+                'title'         => 'Yamaha DTX10K',
+                'description'   => 'DTX10 sorozat.',
+                'monthly_price' => 28000,
+                'deposit'       => 80000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.kBuJIS0i3DirnR5BgzhCUQHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 13,  // Alesis
                 'condition'     => 'Újszerű',
-                'title'         => 'Alesis Crimson 2',
-                'description'   => 'Crimson 2 Kit, 11 részes, fejlett Crimson II modul, 1210+ hangszín.',
-                'monthly_price' => 14000,
-                'deposit'       => 38000,
-            ],
-            [
-                'category_id'   => 3,
-                'brand_id'      => 10,  // Roland
-                'condition'     => 'Új',
-                'title'         => 'Roland TD-50KV2',
-                'description'   => 'Roland zászlóshajó dobszett, TD-50X modul, V-Drums Ultra hangminőség.',
-                'monthly_price' => 30000,
-                'deposit'       => 85000,
-            ],
-            [
-                'category_id'   => 3,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
-                'title'         => 'Yamaha DTX10K',
-                'description'   => 'Legfejlettebb Yamaha elektromos dobszett, tényleges dobbőr érzet, DTX-PRO modul.',
-                'monthly_price' => 28000,
-                'deposit'       => 80000,
-            ],
-            [
-                'category_id'   => 3,
-                'brand_id'      => 13,  // Alesis
-                'condition'     => 'Új',
                 'title'         => 'Alesis Strike Pro',
-                'description'   => 'Prémium Strike Pro szett, 14 részes, valósághű dobhangok, USB audio.',
+                'description'   => 'Strike Pro Kit.',
                 'monthly_price' => 24000,
                 'deposit'       => 68000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.M76jcX0vDCK91uisU-84mAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 3,
                 'brand_id'      => 14,  // Millenium
-                'condition'     => 'Új',
+                'condition'     => 'Újszerű',
                 'title'         => 'Millenium MPS-1000',
-                'description'   => 'Prémium Millenium elektromos dobszett, fejlett modul, mesh dobfejek.',
+                'description'   => 'MPS-1000 elektromos dob.',
                 'monthly_price' => 20000,
                 'deposit'       => 55000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.W8NzLf6fQeDE02Bgbr_n8QHaEK&pid=15.1&o=7&rm=3',
             ],
+
+
+
 
             // ════════════════════════════════════════════════════════════════════
             //  4. HEGEDŰ  (category_id: 4)
-            //  MEGJEGYZÉS: brand_id=33 (Ismeretlen) a készlethez szükséges egy
-            //  "Ismeretlen" vagy "Vegyes" nevű brand bejegyzés a brands táblában.
             // ════════════════════════════════════════════════════════════════════
 
             [
@@ -535,6 +311,7 @@ class InstrumentSeeder extends Seeder
                 'description'   => 'Teljes méretű hegedű kezdőszett vonóval és kofferrel, kezdőknek.',
                 'monthly_price' => 5000,
                 'deposit'       => 12000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.fk3M6_xCOAM3uPIuWFWu8AHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
@@ -544,150 +321,87 @@ class InstrumentSeeder extends Seeder
                 'description'   => 'Belépő szintű Stentor hegedű, tömör tető és szett kiegészítők.',
                 'monthly_price' => 5500,
                 'deposit'       => 13000,
-            ],
-            [
-                'category_id'   => 4,
-                'brand_id'      => 15,  // Stentor
-                'condition'     => 'Használt',
-                'title'         => 'Stentor Student 2',
-                'description'   => 'Fejlettebb Stentor Student, jobb hangminőség haladó kezdőknek.',
-                'monthly_price' => 6500,
-                'deposit'       => 16000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.aqtSNgAAC9bk4_8NfcaMOQHaFj&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
                 'brand_id'      => 16,  // Gewa
                 'condition'     => 'Használt',
                 'title'         => 'Gewa Allegro',
-                'description'   => 'Német minőségű Gewa hegedű, tömör tetőlap, finom hangzás.',
+                'description'   => 'Német minőségű Gewa hegedű.',
                 'monthly_price' => 7000,
                 'deposit'       => 18000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.LyHRobyrrzAoO2T4rIJJLQHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
                 'brand_id'      => 1,   // Yamaha
                 'condition'     => 'Újszerű',
                 'title'         => 'Yamaha V3SKA',
-                'description'   => 'Yamaha kezdő hegedűszett tokkal, vonóval és gyantával, megbízható minőség.',
+                'description'   => 'Yamaha kezdő hegedűszett.',
                 'monthly_price' => 8000,
                 'deposit'       => 20000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.OV7nu1V17K05d1qVhNmveAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
                 'brand_id'      => 17,  // Primavera
                 'condition'     => 'Használt',
                 'title'         => 'Primavera 200',
-                'description'   => 'Belépő szintű hegedű, vonóval és könnyű tokkal szállítva.',
+                'description'   => 'Belépő szintű hegedű.',
                 'monthly_price' => 6000,
                 'deposit'       => 15000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.PkqDU3t9opIxxf3t71dgvAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
                 'brand_id'      => 18,  // Stagg
                 'condition'     => 'Használt',
                 'title'         => 'Stagg VN-4/4',
-                'description'   => 'Teljes méretű Stagg hegedű, tömör lucfenyő tetőlap, kényelmes kezdő hangszer.',
+                'description'   => 'Teljes méretű Stagg hegedű.',
                 'monthly_price' => 5000,
                 'deposit'       => 12000,
-            ],
-            [
-                'category_id'   => 4,
-                'brand_id'      => 16,  // Gewa
-                'condition'     => 'Újszerű',
-                'title'         => 'Gewa Ideale',
-                'description'   => 'Középkategóriás Gewa, jobb hangzás és könnyebb intonálás.',
-                'monthly_price' => 7500,
-                'deposit'       => 19000,
-            ],
-            [
-                'category_id'   => 4,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
-                'title'         => 'Yamaha V5SC',
-                'description'   => 'Kézzel készített tető, haladó kezdőknek és zeneiskolásoknak ajánlott.',
-                'monthly_price' => 9000,
-                'deposit'       => 22000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.Wxvdi067snPh5hFnyvEzhgHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
                 'brand_id'      => 19,  // Hidersine
                 'condition'     => 'Újszerű',
                 'title'         => 'Hidersine Vivente',
-                'description'   => 'Olasz tervezésű hegedű, Brazilwood vonó, könnyű hordozható tok.',
+                'description'   => 'Minőségi Hidersine hegedű.',
                 'monthly_price' => 8500,
                 'deposit'       => 21000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.v7vRwSyHZGaOsQ27eImzGwHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
                 'brand_id'      => 17,  // Primavera
                 'condition'     => 'Használt',
                 'title'         => 'Primavera 100',
-                'description'   => 'Alap szintű hegedű gyerekeknek és felnőtt kezdőknek egyaránt.',
+                'description'   => 'Belépő szintű hegedű.',
                 'monthly_price' => 5500,
                 'deposit'       => 13500,
-            ],
-            [
-                'category_id'   => 4,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
-                'title'         => 'Yamaha V7SG',
-                'description'   => 'Kézzel formált tető és bélés, prémium hegedű zeneiskolai szinten.',
-                'monthly_price' => 10000,
-                'deposit'       => 25000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.BmiDah8RcaB9fBqm5cBZ4QHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
                 'brand_id'      => 15,  // Stentor
                 'condition'     => 'Újszerű',
                 'title'         => 'Stentor Conservatoire',
-                'description'   => 'Konzervatóriumi szintű Stentor, kézzel készített tető, prémium faanyag.',
+                'description'   => 'Felső kategóriás Stentor modell.',
                 'monthly_price' => 8500,
                 'deposit'       => 21000,
-            ],
-            [
-                'category_id'   => 4,
-                'brand_id'      => 16,  // Gewa
-                'condition'     => 'Újszerű',
-                'title'         => 'Gewa Maestro',
-                'description'   => 'Fejlett Gewa hegedű, mester szintű kézimunka, gazdag tónusmélység.',
-                'monthly_price' => 11000,
-                'deposit'       => 28000,
-            ],
-            [
-                'category_id'   => 4,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
-                'title'         => 'Yamaha V10G',
-                'description'   => 'Professzionális Yamaha hegedű, kézzel formált tető, mester-szintű kivitel.',
-                'monthly_price' => 12000,
-                'deposit'       => 32000,
-            ],
-            [
-                'category_id'   => 4,
-                'brand_id'      => 16,  // Gewa
-                'condition'     => 'Újszerű',
-                'title'         => 'Gewa Pure',
-                'description'   => 'Komplett Gewa Pure hegedűszett tokkal és vonóval, kiváló minőség.',
-                'monthly_price' => 9500,
-                'deposit'       => 26000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.2by8HCYH1Q2qQ_lq-bsMEgHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 4,
                 'brand_id'      => 15,  // Stentor
                 'condition'     => 'Újszerű',
                 'title'         => 'Stentor Elysia',
-                'description'   => 'Csúcskategóriás Stentor, kiváló vetítési képesség, professzionális szint.',
+                'description'   => 'Felső kategóriás Stentor modell.',
                 'monthly_price' => 11500,
                 'deposit'       => 30000,
-            ],
-            [
-                'category_id'   => 4,
-                'brand_id'      => 17,  // Primavera
-                'condition'     => 'Újszerű',
-                'title'         => 'Primavera 300',
-                'description'   => 'Fejlettebb Primavera sorozat, erős hangvetítés, haladó zenészeknek.',
-                'monthly_price' => 8000,
-                'deposit'       => 22000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.tKnLR969q0Xe8MM2AIVhSwHaHa&pid=15.1&o=7&rm=3',
             ],
 
             // ════════════════════════════════════════════════════════════════════
@@ -697,333 +411,248 @@ class InstrumentSeeder extends Seeder
             [
                 'category_id'   => 5,
                 'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Yamaha YAS-280',
-                'description'   => 'Megbízható Yamaha szaxofon, kezdők és középhaladók számára, könnyen kezelhető.',
+                'description'   => 'Megbízható belépő szintű alt szaxofon.',
                 'monthly_price' => 14000,
                 'deposit'       => 40000,
-            ],
-            [
-                'category_id'   => 5,
-                'brand_id'      => 20,  // Jupiter
-                'condition'     => 'Újszerű',
-                'title'         => 'Jupiter JAS500',
-                'description'   => 'Könnyű és könnyen kezelhető Jupiter alt szaxofon, iskolai és kezdő szintre.',
-                'monthly_price' => 13000,
-                'deposit'       => 35000,
-            ],
-            [
-                'category_id'   => 5,
-                'brand_id'      => 21,  // Selmer
-                'condition'     => 'Újszerű',
-                'title'         => 'Selmer Prelude AS711',
-                'description'   => 'Selmer belépő szintű szaxofon, könnyű intonálás, kényelmes ergodesign.',
-                'monthly_price' => 15000,
-                'deposit'       => 45000,
-            ],
-            [
-                'category_id'   => 5,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
-                'title'         => 'Yamaha YAS-26',
-                'description'   => 'Megbízható iskolai Yamaha szaxofon, tartós réz hangtest, sima játék.',
-                'monthly_price' => 14000,
-                'deposit'       => 40000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.T93kIxeDVRR8RtGo7KDglwHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 22,  // Trevor James
-                'condition'     => 'Új',
+                'condition'     => 'Használt',
                 'title'         => 'Trevor James The Horn',
-                'description'   => 'Trevor James professzionális szaxofon, kézzel vésett csengő, gazdag hang.',
+                'description'   => 'Kedvelt diák hangszer.',
                 'monthly_price' => 16000,
                 'deposit'       => 48000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.OKvCxdiTWUSbuDU9BgdvpAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 23,  // Conn-Selmer
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Conn-Selmer AS650',
-                'description'   => 'Könnyű Conn-Selmer, aranyozott hangtest, kezdő iskolai szintre.',
+                'description'   => 'Diák alt szaxofon.',
                 'monthly_price' => 13500,
                 'deposit'       => 36000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.dBTnEKWq_5KXwqg-ohPoKgHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 24,  // Gear4music
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Gear4music Alto Sax',
-                'description'   => 'Belépő szintű alt szaxofon, sárgaréz hangtest, tokkal szállítva.',
+                'description'   => 'Belépő szintű alt szaxofon.',
                 'monthly_price' => 10000,
                 'deposit'       => 25000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.s9GsVKOotA7zG-Tv4lyCbgHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 20,  // Jupiter
-                'condition'     => 'Új',
+                'condition'     => 'Használt',
                 'title'         => 'Jupiter JAS700',
-                'description'   => 'Középkategóriás Jupiter, fém csengő, javított billenty\u0171 rendszer.',
+                'description'   => 'Haladó diák hangszer.',
                 'monthly_price' => 17000,
                 'deposit'       => 50000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.R4pZDftqAdPt4ofFcBmwbQHaHu&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 25,  // Buffet Crampon
-                'condition'     => 'Új',
+                'condition'     => 'Használt',
                 'title'         => 'Buffet Crampon 100 Series',
-                'description'   => 'Buffet Crampon belépő sorozat, pontosan hangolt billentyűk, tartós hangtest.',
+                'description'   => 'Minőségi alt szaxofon.',
                 'monthly_price' => 18000,
                 'deposit'       => 55000,
-            ],
-            [
-                'category_id'   => 5,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
-                'title'         => 'Yamaha YAS-480',
-                'description'   => 'Haladó Yamaha szaxofon, jobb intonáció, ergonomikus billentyűelrendezés.',
-                'monthly_price' => 20000,
-                'deposit'       => 60000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.G1EVlGoYeCEplm3O4QieSAAAAA&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 22,  // Trevor James
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Trevor James Alpha',
-                'description'   => 'Kompakt Trevor James belépő modell, lakk befejezés, kényelmes játszhatóság.',
+                'description'   => 'Könnyű fújhatóság.',
                 'monthly_price' => 12500,
                 'deposit'       => 33000,
-            ],
-            [
-                'category_id'   => 5,
-                'brand_id'      => 21,  // Selmer
-                'condition'     => 'Új',
-                'title'         => 'Selmer Axos',
-                'description'   => 'Prémium Selmer Axos, kézzel vésett, gazdag hangszín, professzionális szint.',
-                'monthly_price' => 22000,
-                'deposit'       => 65000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.mPFfLMXuCH3MqRapautybgHaLH&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
+                'condition'     => 'Újszerű',
                 'title'         => 'Yamaha YAS-62',
-                'description'   => 'Professzionális Yamaha szaxofon, egyik legnépszerűbb profi modell.',
+                'description'   => 'Professzionális Yamaha alt szaxofon.',
                 'monthly_price' => 25000,
                 'deposit'       => 75000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.IUIPNzcZryapXC4u3xkR4QHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 20,  // Jupiter
-                'condition'     => 'Új',
+                'condition'     => 'Újszerű',
                 'title'         => 'Jupiter JAS1100',
-                'description'   => 'Prémium Jupiter modell, kézzel vésett csengő, prémium hangkarakter.',
+                'description'   => 'Haladó Jupiter modell.',
                 'monthly_price' => 21000,
                 'deposit'       => 60000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.BHntntgBk_qG6dYyhZKEKgHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 26,  // Yanagisawa
-                'condition'     => 'Új',
+                'condition'     => 'Újszerű',
                 'title'         => 'Yanagisawa AWO1',
-                'description'   => 'Japán prémium szaxofon, bronz hangtest, kivételes projekció és hangszín.',
+                'description'   => 'Prémium japán alt szaxofon.',
                 'monthly_price' => 28000,
                 'deposit'       => 85000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.oDRQUtRcQajexygUWa-lBgHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 21,  // Selmer
-                'condition'     => 'Új',
+                'condition'     => 'Újszerű',
                 'title'         => 'Selmer Series 2',
-                'description'   => 'Világhírű Selmer Series II, a legtöbb profi szaxofonista választása.',
+                'description'   => 'Professzionális Selmer hangszer.',
                 'monthly_price' => 30000,
                 'deposit'       => 90000,
-            ],
-            [
-                'category_id'   => 5,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Új',
-                'title'         => 'Yamaha YAS-875EX',
-                'description'   => 'Yamaha csúcsmodell, egyedi réz ötvözet, kivételes hangszín és dinamika.',
-                'monthly_price' => 35000,
-                'deposit'       => 100000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.a2nb6DMb3FX2C1f7WQU1pQHaJe&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 5,
                 'brand_id'      => 25,  // Buffet Crampon
-                'condition'     => 'Új',
+                'condition'     => 'Újszerű',
                 'title'         => 'Buffet Senzo',
-                'description'   => 'Prémium Buffet szaxofon, kézzel vésett, komplex tónus és válaszkészség.',
+                'description'   => 'Prémium francia alt szaxofon.',
                 'monthly_price' => 27000,
                 'deposit'       => 80000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.AEXoraSyXQlfYxy-rEm1hwHaHa&pid=15.1&o=7&rm=3',
             ],
+
 
             // ════════════════════════════════════════════════════════════════════
             //  6. ELEKTROMOS GITÁR  (category_id: 6)
-            //  MEGJEGYZÉS: "Fender Squier Telecaster" → brand_id=2 (Fender)
-            //              "Squier Stratocaster"      → brand_id=27 (Squier)
             // ════════════════════════════════════════════════════════════════════
 
             [
                 'category_id'   => 6,
                 'brand_id'      => 27,  // Squier
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Squier Stratocaster + erősítő',
-                'description'   => 'Fender Squier Stratocaster szett kis erősítővel, kezdőknek tökéletes csomag.',
+                'description'   => 'Kezdőknek ideális elektromos gitár szett.',
                 'monthly_price' => 9000,
                 'deposit'       => 20000,
+                'image'         => 'https://ts3.mm.bing.net/th?id=OIP.zFuSmRWFTmPca01eO3xD2AHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 7,   // Epiphone
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Epiphone Les Paul Special 2',
-                'description'   => 'Klasszikus Les Paul forma, mahagóni test, humbuckerek, kezdőknek.',
+                'description'   => 'Belépő szintű Les Paul modell.',
                 'monthly_price' => 8500,
                 'deposit'       => 20000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.Z4BFf-0vM04O87Z2YQ_NfAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Yamaha Pacifica 112V',
-                'description'   => 'Az egyik legjobb belépő szintű gitár, HSS konfiguráció, stabil hangolás.',
+                'description'   => 'Kiváló ár-érték arányú Pacifica modell.',
                 'monthly_price' => 9500,
                 'deposit'       => 22000,
-            ],
-            [
-                'category_id'   => 6,
-                'brand_id'      => 3,   // Ibanez
-                'condition'     => 'Újszerű',
-                'title'         => 'Ibanez GRX70QA',
-                'description'   => 'Quilted Maple top, HSH hangszedők, dinamikus tremolo rendszer.',
-                'monthly_price' => 9000,
-                'deposit'       => 21000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.G6u_sZVEAa0_7oSFqwTuSAHaI2&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 2,   // Fender
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Fender Squier Telecaster',
-                'description'   => 'Telecaster klasszikus hangzás, single coil hangszedők, kényelmes nyak.',
+                'description'   => 'Klasszikus Telecaster forma.',
                 'monthly_price' => 10000,
                 'deposit'       => 25000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.Ewi35LGrhF61mc66FhShagHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 8,   // Harley Benton
                 'condition'     => 'Használt',
                 'title'         => 'Harley Benton ST-20',
-                'description'   => 'Legolcsóbb elektromos opció, Strat forma, 3 single coil hangszedő.',
+                'description'   => 'Belépő szintű ST modell.',
                 'monthly_price' => 6500,
                 'deposit'       => 15000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.AdW4izEqU4daB8TsEprsvAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 5,   // Cort
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Cort X100',
-                'description'   => 'Superstrat forma, HSS konfiguráció, Floyd Rose típusú tremolo.',
+                'description'   => 'Modern formájú elektromos gitár.',
                 'monthly_price' => 8000,
                 'deposit'       => 19000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.k7EwvVIEhE-rdcftzagX3QHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 28,  // Jackson
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Jackson JS11 Dinky',
-                'description'   => 'Metal-orientált Dinky test, HSS konfiguráció, gyors játszhatóság.',
+                'description'   => 'Metal orientált hangszer.',
                 'monthly_price' => 9500,
                 'deposit'       => 23000,
-            ],
-            [
-                'category_id'   => 6,
-                'brand_id'      => 7,   // Epiphone
-                'condition'     => 'Újszerű',
-                'title'         => 'Epiphone SG Special',
-                'description'   => 'SG forma, két open-coil humbucker, vékony nyak, könnyed játszhatóság.',
-                'monthly_price' => 9000,
-                'deposit'       => 22000,
-            ],
-            [
-                'category_id'   => 6,
-                'brand_id'      => 3,   // Ibanez
-                'condition'     => 'Újszerű',
-                'title'         => 'Ibanez RG421',
-                'description'   => 'Mahagóni test, Quantum hangszedők, fixed bridge, pontosság és erő.',
-                'monthly_price' => 11000,
-                'deposit'       => 28000,
-            ],
-            [
-                'category_id'   => 6,
-                'brand_id'      => 1,   // Yamaha
-                'condition'     => 'Újszerű',
-                'title'         => 'Yamaha Revstar RS320',
-                'description'   => 'Egyedi Revstar dizájn, P90-stílusú hangszedők, karakteres tónusvilág.',
-                'monthly_price' => 11500,
-                'deposit'       => 26000,
-            ],
-            [
-                'category_id'   => 6,
-                'brand_id'      => 2,   // Fender
-                'condition'     => 'Újszerű',
-                'title'         => 'Fender Player Stratocaster',
-                'description'   => 'Mexikói gyártású Player sorozat, 3 Alnico V single coil, 2-point tremolo.',
-                'monthly_price' => 14000,
-                'deposit'       => 40000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.QelzF30QUqh5r5SO4aGLvQHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 29,  // Gibson
-                'condition'     => 'Új',
+                'condition'     => 'Használt',
                 'title'         => 'Gibson Les Paul Studio',
-                'description'   => 'Valódi USA Gibson, BurstBucker hangszedők, mahagóni test, maple nyak.',
+                'description'   => 'Prémium Les Paul modell.',
                 'monthly_price' => 22000,
                 'deposit'       => 70000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.VwQEb2cbfwhrc2ZeSxJA1wHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 3,   // Ibanez
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Ibanez AZES40',
-                'description'   => 'AZ sorozat belépő modell, prémium Ibanez mechanika, modern hangzás.',
+                'description'   => 'Modern Ibanez modell.',
                 'monthly_price' => 12000,
                 'deposit'       => 32000,
-            ],
-            [
-                'category_id'   => 6,
-                'brand_id'      => 2,   // Fender
-                'condition'     => 'Újszerű',
-                'title'         => 'Fender Player Telecaster',
-                'description'   => 'Mexikói Telecaster, 2 Player Series Alnico V Tele hangszedő, tartós hardver.',
-                'monthly_price' => 13500,
-                'deposit'       => 38000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.pBJH1tii9Fd_LjyY8ORykwHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 30,  // PRS
-                'condition'     => 'Új',
+                'condition'     => 'Használt',
                 'title'         => 'PRS SE Custom 24',
-                'description'   => 'PRS SE sorozat, 85/15 hangszedők, carved maple top, gyönyörű kivitel.',
+                'description'   => 'Kedvelt PRS modell.',
                 'monthly_price' => 15000,
                 'deposit'       => 45000,
+                'image'         => 'https://ts4.mm.bing.net/th?id=OIP.I0SRLFQccyUD-laDCZpzMAHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 31,  // ESP
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'ESP LTD EC-256',
-                'description'   => 'EC forma, Duncan Designed hangszedők, mahagóni test, arched top.',
+                'description'   => 'Rock/metal orientált hangszer.',
                 'monthly_price' => 12500,
                 'deposit'       => 35000,
+                'image'         => 'https://ts1.mm.bing.net/th?id=OIP.kL0igh5MNGMitCTpmPqrMwHaHa&pid=15.1&o=7&rm=3',
             ],
             [
                 'category_id'   => 6,
                 'brand_id'      => 32,  // Schecter
-                'condition'     => 'Újszerű',
+                'condition'     => 'Használt',
                 'title'         => 'Schecter C-6 Deluxe',
-                'description'   => 'Klasszikus C-forma, Duncan Designed hangszedők, könnyű és stabil test.',
+                'description'   => 'Belépő szintű metal gitár.',
                 'monthly_price' => 11500,
                 'deposit'       => 33000,
+                'image'         => 'https://ts2.mm.bing.net/th?id=OIP.eTA4lVZbr-Kg3S4egl428wHaHa&pid=15.1&o=7&rm=3',
             ],
 
         ];
