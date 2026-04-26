@@ -4,7 +4,7 @@ export default {
   props: {
     lending: { type: Object, required: true }
   },
-  emits: ['remove', 'update'],
+  emits: ['remove'],
 
   computed: {
     formattedPrice() {
@@ -30,11 +30,12 @@ export default {
     },
 
     /**
-     * Státusz meghatározása a dátumok alapján.
-     * A backend nem ment státuszt, de a frontend ki tudja számolni:
-     * - "Jövőbeli" ha még nem kezdődött
-     * - "Aktív" ha most fut
-     * - "Lejárt" ha már véget ért
+     * Computes the lending status from the start and end dates.
+     * The backend does not store an explicit status field, so the frontend derives it:
+     *  - "Jövőbeli" (Future)   — the rental has not started yet
+     *  - "Aktív" (Active)      — the rental is currently in progress
+     *  - "Lejárt" (Expired)    — the rental has ended
+     *  - "Visszahozva" (Returned) — the user has returned the instrument early
      */
     statusInfo() {
       if (!this.lending.start_date || !this.lending.end_date) {
@@ -60,6 +61,9 @@ export default {
   },
 
   methods: {
+    /**
+     * Formats an ISO date string in Hungarian short format (YYYY.MM.DD.).
+     */
     formatDate(value) {
       if (!value) return '—';
       const date = new Date(value);
@@ -71,8 +75,7 @@ export default {
       });
     },
 
-    deleteItem()  { this.$emit("remove", this.lending); },
-    refreshItem() { this.$emit("update", this.lending); }
+    deleteItem() { this.$emit("remove", this.lending); }
   }
 };
 </script>
@@ -110,26 +113,20 @@ export default {
         <span class="fs-5 fw-bold text-brand">{{ formattedPrice }}</span>
       </div>
 
-      <div class="d-flex gap-2">
-        <button type="button"
-                class="btn btn-outline-primary btn-sm flex-grow-1"
-                @click="refreshItem">
-          Frissítés
-        </button>
-        <button type="button"
-                class="btn btn-outline-danger btn-sm flex-grow-1"
-                @click="deleteItem">
-          Törlés
-        </button>
-      </div>
+      <button type="button"
+              class="btn btn-outline-danger btn-sm"
+              @click="deleteItem">
+        Törlés
+      </button>
 
     </div>
   </div>
 </template>
 
 <style scoped>
+/* No transition — card is fully static */
 .lending-card {
-  transition: transform 0.3s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  transition: none;
 }
 
 .lending-meta i {
