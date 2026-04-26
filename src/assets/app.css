@@ -1,438 +1,166 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   INSTRUMENT RENTAL — DARK THEME v3
-   "Luxury Music Studio" — meleg sötét alap + arany akcentus + finom glow
-
-   Fájl helye:  src/assets/app.css
-   Importálás:  main.js → import './assets/app.css'  (a Bootstrap UTÁN)
-
-   v3 javítások:
-   - LoginView fehér sáv bug (.bg-light override)
-   - "Hangszerek" h2 aranyfény túlnyúlás (display: inline-block)
-   - "Készen állsz a zenére?" CTA szekció → tágasabb, központi layout
+   INSTRUMENT RENTAL — DARK THEME STYLESHEET
+   Clean, static dark theme with gold accents.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 
 /* ───────────────────────────────────────────────────────────────────────────
-   1. DESIGN TOKENS
-   Rétegzett sötét paletta: 5 szint a mélység érzékeltetéséhez.
-   A háttér és a navbar eltérő árnyalatú, hogy NE olvadjanak egymásba.
+   1. COLOR VARIABLES
+   Central palette — all colors are defined here.
    ─────────────────────────────────────────────────────────────────────────── */
 
 :root {
-    /* Rétegzett sötét háttér (0 = legmélyebb, 4 = legmagasabb "elevation") */
-    --bg-0: #0a0807;             /* navbar — legmélyebb feketés-barna */
-    --bg-1: #141110;             /* body — oldalháttér, picit világosabb */
-    --bg-2: #1d1917;             /* kártyák — tovább emelkedve */
-    --bg-3: #272220;             /* kártya hover / elevated surface */
-    --bg-4: #332d2a;             /* form input háttér */
+    /* Background colors (from darker to lighter) */
+    --bg-navbar: #0a0807;
+    --bg-body: #141110;
+    --bg-card: #1d1917;
+    --bg-input: #332d2a;
 
-    /* Arany akcentus — melegebb hangsúly */
+    /* Gold accent */
     --gold: #f5a623;
-    --gold-bright: #ffb84d;      /* világosabb hover árnyalat */
-    --gold-dark: #b87a14;        /* sötétebb pressed/active */
-    --gold-glow: rgba(245, 166, 35, 0.4);
-    --gold-soft: rgba(245, 166, 35, 0.08);
+    --gold-dark: #b87a14;
 
-    /* Szövegek — dark theme-re hangolva */
-    --text-primary: #f5f0e8;     /* törtfehér — könnyebb a szemnek mint a pure #fff */
-    --text-secondary: #b8b0a5;   /* halvány szürkésbarna */
-    --text-muted: #7a736b;       /* még halványabb */
-    --text-on-gold: #1a1208;     /* sötét szöveg arany háttéren */
+    /* Text colors */
+    --text-primary: #f5f0e8;
+    --text-secondary: #b8b0a5;
+    --text-muted: #7a736b;
+    --text-on-gold: #1a1208;
 
-    /* Keretek */
-    --border-subtle: rgba(245, 240, 232, 0.08);    /* alig látható */
-    --border-hover: rgba(245, 166, 35, 0.4);       /* arany hover keret */
-
-    /* Árnyékok (sötét témán más jellegű kell!) */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
-    --shadow-gold: 0 8px 32px rgba(245, 166, 35, 0.25);
-
-    /* Lekerekítések */
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-
-    /* Átmenetek */
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-fast: 0.2s var(--ease-out);
-    --transition-smooth: 0.4s var(--ease-out);
+    /* Borders and shadows */
+    --border-subtle: rgba(245, 240, 232, 0.08);
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --radius: 8px;
 }
 
 
 /* ───────────────────────────────────────────────────────────────────────────
-   2. ALAPOK
-   Body + tipográfia. NEM írjuk felül a heading-ek színét globálisan.
+   2. BASE STYLES
+   Body, typography, base colors.
    ─────────────────────────────────────────────────────────────────────────── */
 
 html, body {
-    background-color: var(--bg-1);
+    background-color: var(--bg-body);
     color: var(--text-primary);
     min-height: 100%;
+    font-family: 'Segoe UI', system-ui, sans-serif;
 }
 
-body {
-    font-family: 'Segoe UI', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-
-    /* Finom "stúdió" textúra — nagyon halvány fény a jobb felső sarokból */
-    background-image:
-            radial-gradient(ellipse at top right,
-            rgba(245, 166, 35, 0.06) 0%,
-            transparent 50%),
-            radial-gradient(ellipse at bottom left,
-            rgba(184, 122, 20, 0.04) 0%,
-            transparent 50%);
-    background-attachment: fixed;
-}
-
-/* Headings — color: inherit hogy a text-white és text-muted utility-k működjenek */
 h1, h2, h3, h4, h5, h6 {
     color: inherit;
     font-weight: 600;
-    letter-spacing: -0.015em;
 }
 
-/* Display heading-ek (hero) — nagyobb letter-spacing kiigazítás */
-.display-1, .display-2, .display-3, .display-4, .display-5 {
-    letter-spacing: -0.03em;
-    font-weight: 700;
-}
-
-/* Szövegszín utility override-ok sötét témához */
-.text-muted {
-    color: var(--text-muted) !important;
-}
-
-.text-dark {
-    color: var(--text-primary) !important;
-}
-
-.text-body {
-    color: var(--text-primary) !important;
-}
-
-/* ─── KRITIKUS JAVÍTÁS: .bg-light ELTÜNTETÉSE ───
-   A LoginView body-n lévő "bg-light" osztály fehér sávot csinált.
-   Ezt mindenhol dark háttérre váltjuk. */
-.bg-light {
-    background-color: var(--bg-1) !important;
-    color: var(--text-primary) !important;
-}
-
-/* Linkek — arany alaphangon */
-a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item) {
+a {
     color: var(--gold);
     text-decoration: none;
-    transition: color var(--transition-fast);
 }
 
-a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item):hover {
-    color: var(--gold-bright);
+a:hover {
+    color: var(--gold);
     text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 3px;
+}
+
+/* Override Bootstrap light backgrounds for dark theme.
+   IMPORTANT: .bg-light must always be dark — otherwise a white stripe
+   appears on the LoginView wrapper. */
+.text-muted { color: var(--text-muted) !important; }
+
+.bg-light,
+.min-vh-100.bg-light,
+div.bg-light {
+    background-color: var(--bg-body) !important;
+    color: var(--text-primary) !important;
 }
 
 
 /* ───────────────────────────────────────────────────────────────────────────
    3. NAVBAR
-   A navbar a LEGMÉLYEBB fekete — így kontrasztot kap a body-hoz képest
-   és nem olvad bele. Alul arany vékony csík választja el.
+   Dark background with a thin gold line at the bottom.
    ─────────────────────────────────────────────────────────────────────────── */
 
 .navbar.bg-dark {
-    background-color: var(--bg-0) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-    padding: 0.85rem 0;
+    background-color: var(--bg-navbar) !important;
     border-bottom: 1px solid var(--gold);
-    position: relative;
-}
-
-/* Alsó glow-effektus a navbar-on */
-.navbar.bg-dark::after {
-    content: "";
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg,
-    transparent,
-    var(--gold) 20%,
-    var(--gold) 80%,
-    transparent);
-    opacity: 0.6;
+    padding: 0.85rem 0;
 }
 
 .navbar-brand {
     font-weight: 700;
     font-size: 1.4rem;
-    letter-spacing: 0.01em;
     color: var(--text-primary) !important;
-    transition: color var(--transition-fast);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
 }
 
-.navbar-brand::before {
-    content: "🎵";
-    font-size: 1.2em;
-    filter: drop-shadow(0 0 8px var(--gold-glow));
-}
-
-.navbar-brand:hover {
-    color: var(--gold) !important;
-}
-
-/* Nav-linkek — aláhúzás animáció hoveren */
 .navbar-dark .nav-link {
-    position: relative;
     color: rgba(245, 240, 232, 0.75) !important;
     font-weight: 500;
     padding: 0.5rem 1.1rem !important;
-    transition: color var(--transition-fast);
 }
 
-.navbar-dark .nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: 2px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--gold);
-    transition: width var(--transition-smooth);
-    transform: translateX(-50%);
-    box-shadow: 0 0 8px var(--gold-glow);
-}
-
-.navbar-dark .nav-link:hover {
-    color: var(--gold) !important;
-}
-
-.navbar-dark .nav-link:hover::after,
-.navbar-dark .nav-link.router-link-active::after {
-    width: 70%;
-}
-
+.navbar-dark .nav-link:hover,
 .navbar-dark .nav-link.router-link-active {
     color: var(--gold) !important;
 }
 
 
 /* ───────────────────────────────────────────────────────────────────────────
-   4. GOMBOK
-   A btn-success (zöld Kölcsönzöm) és a btn-primary (kék Regisztráció,
-   Kölcsönzés) MIND arany lesz, mint a btn-warning.
-   A btn-danger (Kijelentkezés) marad piros.
+   4. BUTTONS
+   Gold button family (warning, primary, success) with unified styling.
+   Danger remains red (for Delete, etc.).
    ─────────────────────────────────────────────────────────────────────────── */
 
 .btn {
     font-weight: 600;
-    letter-spacing: 0.02em;
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
+    border-radius: var(--radius);
     padding: 0.55rem 1.4rem;
     border-width: 1px;
-    position: relative;
-    overflow: hidden;
 }
 
-.btn:hover {
-    transform: translateY(-2px);
-}
-
-.btn:active {
-    transform: translateY(0);
-}
-
-/* ─── Arany gomb család ─── */
 .btn-warning,
 .btn-primary,
 .btn-success {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    background-color: var(--gold);
     border-color: var(--gold);
     color: var(--text-on-gold);
-    box-shadow:
-            0 4px 14px rgba(0, 0, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .btn-warning:hover,
 .btn-primary:hover,
 .btn-success:hover {
-    background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 100%);
-    border-color: var(--gold-bright);
-    color: var(--text-on-gold);
-    box-shadow:
-            var(--shadow-gold),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.btn-warning:focus,
-.btn-primary:focus,
-.btn-success:focus {
-    box-shadow: 0 0 0 3px var(--gold-glow);
+    background-color: var(--gold-dark);
+    border-color: var(--gold-dark);
     color: var(--text-on-gold);
 }
 
-.btn-warning:active,
-.btn-primary:active,
-.btn-success:active {
-    background: var(--gold-dark) !important;
-    color: var(--text-on-gold) !important;
-}
-
-/* ─── Danger (kijelentkezés) — piros marad, csak finomítva ─── */
-.btn-danger {
-    background: linear-gradient(135deg, #e14c5b 0%, #b83444 100%);
-    border-color: #e14c5b;
-    color: #fff;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
-}
-
-.btn-danger:hover {
-    background: linear-gradient(135deg, #ef5c6b 0%, #c84454 100%);
-    box-shadow: 0 8px 24px rgba(225, 76, 91, 0.35);
-    color: #fff;
-}
-
-/* ─── Outline gombok — arany keret ─── */
-.btn-outline-light {
-    color: var(--text-primary);
-    border-color: rgba(245, 240, 232, 0.3);
-}
-
-.btn-outline-light:hover {
-    background: rgba(245, 240, 232, 0.1);
-    border-color: var(--gold);
-    color: var(--gold);
-}
-
-.btn-outline-dark,
-.btn-outline-secondary {
+.btn-outline-secondary,
+.btn-outline-dark {
     color: var(--text-secondary);
     border-color: var(--border-subtle);
-    background: var(--bg-2);
+    background: var(--bg-card);
 }
 
-.btn-outline-dark:hover,
-.btn-outline-secondary:hover {
-    background: var(--bg-3);
+.btn-outline-secondary:hover,
+.btn-outline-dark:hover {
+    background: var(--bg-input);
     border-color: var(--gold);
     color: var(--gold);
-}
-
-.btn-outline-primary {
-    color: var(--gold);
-    border-color: var(--gold);
-    background: transparent;
-}
-
-.btn-outline-primary:hover {
-    background: var(--gold);
-    color: var(--text-on-gold);
-    border-color: var(--gold);
-}
-
-.btn-outline-danger {
-    color: #e14c5b;
-    border-color: #e14c5b;
-    background: transparent;
-}
-
-.btn-outline-danger:hover {
-    background: #e14c5b;
-    color: #fff;
 }
 
 
 /* ───────────────────────────────────────────────────────────────────────────
-   5. KÁRTYÁK — MODERN HOVER EFFEKTEK
-   Sötét háttér, arany top-accent csík, hover-en shine-sweep + lift + glow.
-   Képes kártyák előkészítve (.card img automatikus zoom + flash).
+   5. CARDS
+   Static appearance with a gold stripe on the left edge.
    ─────────────────────────────────────────────────────────────────────────── */
 
 .card {
-    background-color: var(--bg-2);
+    background-color: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md);
+    border-left: 3px solid var(--gold);
+    border-radius: var(--radius);
     color: var(--text-primary);
-    box-shadow: var(--shadow-sm);
-    transition: all var(--transition-smooth);
-    position: relative;
-    overflow: hidden;
+    box-shadow: var(--shadow);
 }
 
-/* Felső arany csík — alapból halvány, hoveren felerősödik */
-.card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg,
-    transparent 0%,
-    var(--gold) 50%,
-    transparent 100%);
-    opacity: 0.4;
-    transition: opacity var(--transition-smooth);
-    z-index: 2;
-    pointer-events: none;
-}
-
-/* Shine-sweep effekt — arany fénycsík átsuhan a kártyán hoveren */
-.card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-            110deg,
-            transparent 40%,
-            rgba(245, 166, 35, 0.08) 50%,
-            transparent 60%
-    );
-    transition: left 0.8s var(--ease-out);
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* Hover az összes kártyán */
-.card:hover {
-    border-color: var(--border-hover);
-    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border-hover);
-    background-color: var(--bg-3);
-}
-
-.card:hover::before {
-    opacity: 1;
-}
-
-.card:hover::after {
-    left: 100%;
-}
-
-/* A RÁCSBAN lévő kártyák (termékkártyák) további "lift" effektet kapnak */
-.row .card:hover {
-    transform: translateY(-6px);
-    box-shadow:
-            var(--shadow-lg),
-            0 0 0 1px var(--border-hover),
-            0 0 40px rgba(245, 166, 35, 0.15);
-}
-
-/* Card-body fölé kerül, hogy a shine ne takarja el */
 .card-body {
-    position: relative;
-    z-index: 3;
     padding: 1.5rem;
 }
 
@@ -440,134 +168,21 @@ a:not(.btn):not(.nav-link):not(.navbar-brand):not(.dropdown-item):hover {
     font-weight: 700;
     color: var(--text-primary);
     font-size: 1.15rem;
-    margin-bottom: 0.5rem;
-}
-
-/* ─── KÉPES KÁRTYÁK ELŐKÉSZÍTÉSE ───
-   Amint bekerülnek a <img> tagek a hangszerkártyákba, ezek automatikusan
-   működni fognak (hover zoom + subtle brightness flash). */
-.card img {
-    display: block;
-    width: 100%;
-    height: auto;
-    transition: transform 0.6s var(--ease-out), filter var(--transition-smooth);
-}
-
-.card-img-top,
-.card > img:first-child {
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
-    border-bottom: 1px solid var(--border-subtle);
-}
-
-.card:hover img {
-    transform: scale(1.05);
-    filter: brightness(1.15) saturate(1.15);
 }
 
 
 /* ───────────────────────────────────────────────────────────────────────────
-   6. HERO SECTION — HOMEVIEW
-   A hero cím arany és glow effekttel, jól olvasható.
-   ─────────────────────────────────────────────────────────────────────────── */
-
-.hero {
-    min-height: 78vh !important;
-}
-
-.hero::before {
-    background: linear-gradient(
-            135deg,
-            rgba(10, 8, 7, 0.75) 0%,
-            rgba(20, 17, 16, 0.6) 50%,
-            rgba(10, 8, 7, 0.85) 100%
-    ) !important;
-}
-
-/* Hero cím — ARANY, glow effekttel, OLVASHATÓ */
-.hero h1,
-.hero .display-1,
-.hero .display-2,
-.hero .display-3 {
-    color: var(--gold) !important;
-    text-shadow:
-            0 2px 30px rgba(0, 0, 0, 0.9),
-            0 0 40px rgba(245, 166, 35, 0.3),
-            0 0 80px rgba(245, 166, 35, 0.15);
-    animation: fadeInUp 0.8s var(--ease-out);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-}
-
-/* Hero lead szöveg — világos, jól olvasható */
-.hero .lead,
-.hero p {
-    color: var(--text-primary) !important;
-    text-shadow: 0 1px 20px rgba(0, 0, 0, 0.8);
-    animation: fadeInUp 0.8s var(--ease-out) 0.15s backwards;
-    font-size: 1.2rem;
-}
-
-.hero .btn {
-    animation: fadeInUp 0.8s var(--ease-out) 0.3s backwards;
-    font-size: 1.1rem;
-    padding: 0.85rem 2.25rem;
-    box-shadow: var(--shadow-gold);
-}
-
-/* ─── Feature boxok (3 oszlop) ─── */
-.feature-box {
-    background-color: var(--bg-2);
-    border: 1px solid var(--border-subtle);
-    height: 100%;
-    transition: all var(--transition-smooth);
-    color: var(--text-primary);
-}
-
-.feature-box h4 {
-    color: var(--text-primary);
-}
-
-.feature-box p {
-    color: var(--text-secondary);
-}
-
-.feature-box:hover {
-    background-color: var(--bg-3);
-    border-color: var(--border-hover);
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-gold);
-}
-
-.feature-box .bi {
-    transition: transform var(--transition-smooth), filter var(--transition-smooth);
-    filter: drop-shadow(0 0 12px var(--gold-glow));
-}
-
-.feature-box:hover .bi {
-    transform: scale(1.2) rotate(-8deg);
-    filter: drop-shadow(0 0 20px var(--gold-glow));
-}
-
-/* HomeView bg-light szekciója — sötétítsük! */
-section.bg-light {
-    background-color: var(--bg-1) !important;
-    color: var(--text-primary) !important;
-}
-
-
-/* ───────────────────────────────────────────────────────────────────────────
-   7. FORM VEZÉRLŐK — DARK THEME
+   6. FORMS
+   Dark input fields with gold focus border.
    ─────────────────────────────────────────────────────────────────────────── */
 
 .form-control,
 .form-select {
-    background-color: var(--bg-4);
+    background-color: var(--bg-input);
     border: 1px solid var(--border-subtle);
     color: var(--text-primary);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius);
     padding: 0.6rem 0.85rem;
-    transition: all var(--transition-fast);
 }
 
 .form-control::placeholder {
@@ -576,19 +191,10 @@ section.bg-light {
 
 .form-control:focus,
 .form-select:focus {
-    background-color: var(--bg-4);
+    background-color: var(--bg-input);
     border-color: var(--gold);
     color: var(--text-primary);
-    box-shadow: 0 0 0 3px var(--gold-glow);
-    outline: none;
-}
-
-/* Disabled inputs */
-.form-control:disabled,
-.form-select:disabled {
-    background-color: var(--bg-2);
-    color: var(--text-muted);
-    opacity: 0.6;
+    box-shadow: none;
 }
 
 .form-label {
@@ -597,513 +203,90 @@ section.bg-light {
     margin-bottom: 0.4rem;
 }
 
-/* Bootstrap select nyíl ikonját állítjuk vissza világosra */
-.form-select {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23f5a623' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-}
-
-/* Validációs hiba kiemelése */
 .is-invalid {
     border-color: #e14c5b !important;
 }
 
 .invalid-feedback {
-    font-size: 0.85rem;
     color: #ff6b7a;
-    margin-top: 0.25rem;
-}
-
-/* Date input ikon világosra */
-.form-control[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1) brightness(0.9);
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity var(--transition-fast);
-}
-
-.form-control[type="date"]::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
+    font-size: 0.85rem;
 }
 
 
 /* ───────────────────────────────────────────────────────────────────────────
-   8. AUTH LAYOUT — REGISTER/LOGIN
-   JAVÍTVA: a LoginView min-vh-100 bg-light wrapperét is sötétre festi.
+   7. TABLES (admin panel)
+   Bootstrap striped tables darken odd rows automatically — therefore we
+   explicitly set text color to ensure readability.
    ─────────────────────────────────────────────────────────────────────────── */
 
-.auth-layout {
-    background: var(--bg-1) !important;
-    background-image:
-            radial-gradient(ellipse at center,
-            rgba(245, 166, 35, 0.12) 0%,
-            transparent 65%) !important;
-}
-
-/* LoginView wrappere (.min-vh-100.bg-light) — a .bg-light global override
-   már a 2. szekcióban megvan, de itt nested módon is biztosítjuk */
-.auth-layout .bg-light,
-.auth-layout .min-vh-100 {
-    background-color: transparent !important;
-}
-
-/* RegisterView csupasz form → automatikusan stilizált kártya */
-.auth-layout form {
-    background-color: var(--bg-2);
-    padding: 2.5rem;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    width: 100%;
-    max-width: 420px;
-    border: 1px solid var(--border-subtle);
-    position: relative;
-}
-
-.auth-layout form::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 20%;
-    right: 20%;
-    height: 2px;
-    background: linear-gradient(90deg,
-    transparent,
-    var(--gold),
-    transparent);
-    opacity: 0.6;
-}
-
-/* A <b> tagek (Email cím, Jelszó, stb.) — label stílust kapnak */
-.auth-layout form b.d-block {
-    margin-top: 1rem;
-    margin-bottom: 0.45rem;
-    font-size: 0.88rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-}
-
-.auth-layout form b.d-block:first-child {
-    margin-top: 0;
-}
-
-.auth-layout form button[type="button"] {
-    width: 100%;
-    margin-top: 1.75rem !important;
-    padding: 0.75rem;
-    font-size: 1rem;
-}
-
-/* LoginView kártya is kapja a glow-ot */
-.auth-layout .card {
-    background-color: var(--bg-2);
-    border: 1px solid var(--border-subtle);
-    box-shadow: var(--shadow-lg);
-}
-
-
-/* ───────────────────────────────────────────────────────────────────────────
-   9. LIST GROUP — KÖLCSÖNZÉSEIM
-   ─────────────────────────────────────────────────────────────────────────── */
-
-.list-group {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    background-color: var(--bg-2);
-}
-
-.list-group-item {
-    background-color: var(--bg-2);
+.table {
+    background-color: var(--bg-card);
     color: var(--text-primary);
-    border-color: var(--border-subtle);
-    padding: 1.25rem 1.5rem;
-    transition: all var(--transition-fast);
-    position: relative;
+    border-radius: var(--radius);
+    --bs-table-bg: var(--bg-card);
+    --bs-table-color: var(--text-primary);
+    --bs-table-striped-color: var(--text-primary);
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+    --bs-table-hover-color: var(--text-primary);
+    --bs-table-hover-bg: var(--bg-input);
+    --bs-table-border-color: var(--border-subtle);
 }
 
-.list-group-item:hover {
-    background-color: var(--bg-3);
-    padding-left: 1.75rem;
-}
-
-.list-group-item:hover::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 15%;
-    bottom: 15%;
-    width: 3px;
-    background: var(--gold);
-    box-shadow: 0 0 12px var(--gold-glow);
-}
-
-.list-group-item .fw-semibold,
-.list-group-item strong,
-.list-group-item b {
-    color: var(--text-primary);
-}
-
-.list-group-item .text-muted,
-.list-group-item .small {
-    color: var(--text-muted);
-}
-
-/* bg-light a list-item-en (pl. szerkesztés közben) */
-.list-group-item .bg-light {
-    background-color: var(--bg-4) !important;
-    border-color: var(--border-subtle) !important;
-}
-
-
-/* ───────────────────────────────────────────────────────────────────────────
-   10. BADGE — találatszámláló, státusz jelölők
-   ─────────────────────────────────────────────────────────────────────────── */
-
-.badge.bg-dark {
-    background-color: var(--bg-0) !important;
+.table thead th {
+    background-color: var(--bg-navbar);
     color: var(--gold);
-    font-weight: 600;
-    padding: 0.5em 0.9em;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border-subtle);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
 }
 
-/* "Aktív" badge — zöld marad, de picit tompítottabb */
-.badge.bg-success,
-.bg-success {
-    background-color: #2d7a4f !important;
-    color: #fff;
+/* Ensure all table cells remain readable */
+.table tbody td,
+.table-striped > tbody > tr > td,
+.table-striped > tbody > tr:nth-of-type(odd) > td {
+    color: var(--text-primary) !important;
 }
 
 
 /* ───────────────────────────────────────────────────────────────────────────
-   11. ALERT — visszajelzések
+   8. ALERTS AND BADGES
    ─────────────────────────────────────────────────────────────────────────── */
 
 .alert {
-    border-radius: var(--radius-md);
+    border-radius: var(--radius);
     border: 1px solid var(--border-subtle);
-    padding: 1rem 1.25rem;
-    font-size: 0.95rem;
 }
 
 .alert-info {
     background-color: rgba(70, 140, 210, 0.12);
     color: #7fb5e8;
-    border-color: rgba(70, 140, 210, 0.25);
 }
 
 .alert-warning {
-    background-color: var(--gold-soft);
-    color: var(--gold-bright);
-    border-color: rgba(245, 166, 35, 0.25);
+    background-color: rgba(245, 166, 35, 0.08);
+    color: var(--gold);
 }
 
 .alert-danger {
     background-color: rgba(225, 76, 91, 0.12);
     color: #ff8a95;
-    border-color: rgba(225, 76, 91, 0.25);
 }
+
+.alert-success {
+    background-color: rgba(45, 122, 79, 0.15);
+    color: #6dc995;
+}
+
+.badge.bg-success { background-color: #2d7a4f !important; }
 
 
 /* ───────────────────────────────────────────────────────────────────────────
-   12. TÁBLÁZATOK — ADMIN PANEL
-   ─────────────────────────────────────────────────────────────────────────── */
-
-.table {
-    background-color: var(--bg-2);
-    color: var(--text-primary);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-    margin-bottom: 0;
-    --bs-table-bg: var(--bg-2);
-    --bs-table-color: var(--text-primary);
-    --bs-table-border-color: var(--border-subtle);
-}
-
-.table thead {
-    background-color: var(--bg-0);
-}
-
-.table thead th {
-    background-color: var(--bg-0);
-    color: var(--gold);
-    font-weight: 700;
-    padding: 1rem 1.25rem;
-    border: none;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.05em;
-}
-
-.table tbody tr {
-    transition: background-color var(--transition-fast);
-    border-color: var(--border-subtle);
-}
-
-.table tbody tr:hover {
-    background-color: var(--bg-3) !important;
-    --bs-table-hover-bg: var(--bg-3);
-}
-
-.table tbody td {
-    padding: 0.85rem 1.25rem;
-    border-color: var(--border-subtle);
-    color: var(--text-primary);
-}
-
-
-/* ───────────────────────────────────────────────────────────────────────────
-   13. TARTALMI TERÜLETEK + SZEKCIÓCÍMEK
-   JAVÍTVA: h2-k inline-block, aranyfény csak a szöveg mellett.
-            Középre igazított (CTA) szekciók tágasabb padding + dekor vonal.
-   ─────────────────────────────────────────────────────────────────────────── */
-
-.page-content,
-.admin-content,
-main {
-    max-width: 1280px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.page-content,
-.admin-content {
-    padding: 2rem 1.25rem;
-}
-
-/* Extra padding a CTA szekcióknak (pl. "Készen állsz a zenére?") */
-section.text-center {
-    padding: 4.5rem 1rem !important;
-}
-
-/* ─── BAL-IGAZÍTOTT SZEKCIÓCÍMEK (pl. "Hangszerek") ─── */
-/* inline-block: csak a szöveg szélességéig tart, nem húz aranyfényt végig */
-section h2,
-.page-content > h2 {
-    display: inline-block;
-    position: relative;
-    padding: 0.4rem 0 0.4rem 1.5rem;
-    margin-bottom: 2rem;
-    color: var(--text-primary);
-    font-weight: 700;
-}
-
-/* Pseudo-element bookmark — KONTROLLÁLT méretű glow */
-section h2::before,
-.page-content > h2::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 20%;
-    bottom: 20%;
-    width: 4px;
-    background: linear-gradient(180deg,
-    transparent 0%,
-    var(--gold) 15%,
-    var(--gold) 85%,
-    transparent 100%);
-    border-radius: 4px;
-    box-shadow: 0 0 16px var(--gold-glow);
-}
-
-/* ─── KÖZÉPRE IGAZÍTOTT SZEKCIÓCÍMEK (pl. "Készen állsz a zenére?") ─── */
-section.text-center h2 {
-    display: inline-block;
-    padding: 0 2rem !important;
-    margin-bottom: 2.5rem !important;
-    font-size: 2.5rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    position: relative;
-}
-
-/* Bal bookmark kiiktatása középre igazított h2-re */
-section.text-center h2::before {
-    display: none;
-}
-
-/* Arany dekor vonal a CTA cím ALATT */
-section.text-center h2::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -1rem;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 3px;
-    background: linear-gradient(90deg,
-    transparent,
-    var(--gold) 50%,
-    transparent);
-    border-radius: 2px;
-    box-shadow: 0 0 12px var(--gold-glow);
-}
-
-/* CTA szekció szövegét is tágasabbá tesszük */
-section.text-center .lead,
-section.text-center p {
-    max-width: 600px;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    margin-bottom: 2.5rem !important;
-    color: var(--text-secondary);
-}
-
-
-/* ───────────────────────────────────────────────────────────────────────────
-   14. ANIMÁCIÓK
-   ─────────────────────────────────────────────────────────────────────────── */
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(24px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes goldPulse {
-    0%, 100% { box-shadow: 0 0 0 0 var(--gold-glow); }
-    50% { box-shadow: 0 0 0 12px transparent; }
-}
-
-/* Oldal váltáskor finom fade-in */
-.page-content > *,
-.admin-content > * {
-    animation: fadeIn 0.4s var(--ease-out);
-}
-
-
-/* ───────────────────────────────────────────────────────────────────────────
-   15. SCROLLBAR — DARK THEME
-   ─────────────────────────────────────────────────────────────────────────── */
-
-::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-0);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--bg-4);
-    border-radius: 6px;
-    border: 2px solid var(--bg-0);
-    transition: background var(--transition-fast);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--gold-dark);
-}
-
-/* Firefox */
-* {
-    scrollbar-color: var(--bg-4) var(--bg-0);
-    scrollbar-width: thin;
-}
-
-
-/* ───────────────────────────────────────────────────────────────────────────
-   16. RESPONSIVE FINOMÍTÁSOK
-   ─────────────────────────────────────────────────────────────────────────── */
-
-@media (max-width: 768px) {
-    .hero {
-        min-height: 60vh !important;
-    }
-
-    .hero h1 {
-        font-size: 2.2rem !important;
-    }
-
-    .hero .lead {
-        font-size: 1rem !important;
-    }
-
-    .card-body {
-        padding: 1.25rem;
-    }
-
-    .page-content,
-    .admin-content {
-        padding: 1rem;
-    }
-
-    section h2 {
-        font-size: 1.5rem;
-    }
-
-    section.text-center h2 {
-        font-size: 1.85rem;
-    }
-
-    section.text-center {
-        padding: 3rem 1rem !important;
-    }
-
-    .auth-layout form {
-        padding: 1.75rem 1.5rem;
-        margin: 1rem;
-    }
-}
-
-
-/* ───────────────────────────────────────────────────────────────────────────
-   17. UTILITY OSZTÁLYOK (SAJÁT)
+   9. CUSTOM UTILITY CLASSES
    ─────────────────────────────────────────────────────────────────────────── */
 
 .text-brand { color: var(--gold) !important; }
 
-.bg-brand {
-    background-color: var(--gold) !important;
-    color: var(--text-on-gold) !important;
-}
-
-.bg-gradient-brand {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-    color: var(--text-on-gold);
-}
-
-.divider {
-    height: 1px;
-    background: linear-gradient(90deg,
-    transparent,
-    var(--border-subtle),
-    var(--gold),
-    var(--border-subtle),
-    transparent);
-    margin: 2rem 0;
-    opacity: 0.5;
-}
-
-/* Hr elválasztó sötét témában */
 hr {
     border-color: var(--border-subtle);
     opacity: 0.5;
 }
-
-/* Border utility override-ok */
-.border {
-    border-color: var(--border-subtle) !important;
-}
-
-.rounded {
-    border-radius: var(--radius-sm) !important;
-}
-
-.shadow-sm { box-shadow: var(--shadow-sm) !important; }
-.shadow { box-shadow: var(--shadow-md) !important; }
-.shadow-lg { box-shadow: var(--shadow-lg) !important; }
