@@ -48,7 +48,7 @@ export default {
         this.$router.push('/auth/login');
 
       } catch (err) {
-        /** TODO: display field-level errors in the UI instead of only logging them. */
+        /**  display field-level errors in the UI instead of only logging them. */
         console.log(err.response?.data?.errors);
       }
     }
