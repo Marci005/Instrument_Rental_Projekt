@@ -1,3 +1,17 @@
+/**
+ * @file router/index.js
+ * @description Vue Router configuration for the Instrument Rental SPA.
+ *
+ * Route groups:
+ *   /         → PublicLayout  (unauthenticated visitors)
+ *   /auth/*   → AuthLayout   (guest-only: login, register)
+ *   /app/*    → AppLayout    (requiresAuth; admins are redirected to /admin)
+ *   /admin/*  → AdminLayout  (requiresAuth + requiresAdmin)
+ *   /*        → NotFoundView (catch-all 404)
+ *
+ * A single beforeEach guard handles all access control logic.
+ */
+
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../utils/authStore'
 
@@ -14,24 +28,26 @@ import InstrumentDetailsView from "@/views/public/InstrumentDetailsView.vue";
 import AppLendingView from "@/components/lending/LendingView.vue";
 
 // Admin views
-import AdminLendingListView from "@/views/app/LendingListView.vue";
-import AdminLendingDetailsView from "@/views/app/LendingDetailsView.vue";
-import AdminProfileView from "@/views/app/ProfileView.vue";
 import AdminUserView from "@/views/app/admin/AdminUserView.vue";
 import AdminUserRentsView from "@/views/app/admin/AdminUserRentsView.vue";
 import InstrumentFormView from "@/views/app/admin/InstrumentFormView.vue";
 
-// Layouts
+/**
+ * Layouts are lazy-loaded (dynamic import) where they are not on the
+ * critical first-load path, so their JS chunk is only fetched when needed.
+ */
 const PublicLayout = () => import("@/components/layouts/PublicLayout.vue");
-const AuthLayout = () => import('@/components/layouts/AuthLayout.vue');
-const AppLayout = () => import('@/components/layouts/AppLayout.vue');
+const AuthLayout   = () => import('@/components/layouts/AuthLayout.vue');
+const AppLayout    = () => import('@/components/layouts/AppLayout.vue');
+/** AdminLayout is eagerly imported because admins land here right after login. */
 import AdminLayout from "@/components/layouts/AdminLayout.vue";
 
 const router = createRouter({
+    /** HTML5 History API — clean URLs without the # fragment. */
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
 
-        // PUBLIC
+        // ── PUBLIC ────────────────────────────────────────────────────────────
         {
             path: '/',
             component: PublicLayout,
@@ -48,8 +64,11 @@ const router = createRouter({
                     component: InstrumentsView,
                     meta: { title: 'Hangszerek' }
                 },
-
-                // Public details page → automatically redirects to the APP version
+                /**
+                 * Redirect /instruments/:id → app-instrument-details.
+                 * Visitors who arrive on the public URL are sent to the
+                 * authenticated version that shows the LendingForm.
+                 */
                 {
                     path: 'instruments/:id',
                     redirect: (to) => {
@@ -59,10 +78,11 @@ const router = createRouter({
             ]
         },
 
-        // AUTH
+        // ── AUTH (guest-only) ─────────────────────────────────────────────────
         {
             path: '/auth',
             component: AuthLayout,
+            /** meta.guest: the guard redirects logged-in users away from here. */
             meta: { guest: true },
             children: [
                 {
@@ -80,10 +100,11 @@ const router = createRouter({
             ]
         },
 
-        // APP (authenticated users)
+        // ── APP (authenticated users) ─────────────────────────────────────────
         {
             path: '/app',
             component: AppLayout,
+            /** meta.requiresAuth: unauthenticated users are sent to /auth/login. */
             meta: { requiresAuth: true },
             children: [
                 {
@@ -99,6 +120,10 @@ const router = createRouter({
                 {
                     path: 'instruments/:id',
                     name: 'app-instrument-details',
+                    /**
+                     * props: true — the :id route param is injected directly
+                     * as a component prop, avoiding manual useRoute() calls.
+                     */
                     props: true,
                     component: InstrumentDetailsView
                 },
@@ -111,10 +136,11 @@ const router = createRouter({
             ]
         },
 
-        // ADMIN
+        // ── ADMIN ─────────────────────────────────────────────────────────────
         {
             path: '/admin',
             component: AdminLayout,
+            /** Both flags must be true — only logged-in admins reach this section. */
             meta: { requiresAuth: true, requiresAdmin: true },
             children: [
                 {
@@ -131,25 +157,6 @@ const router = createRouter({
                     meta: { title: 'Felhasználó kölcsönzései' }
                 },
                 {
-                    path: 'lendings',
-                    name: 'admin-lendings',
-                    component: AdminLendingListView,
-                    meta: { title: 'Kölcsönzések' }
-                },
-                {
-                    path: 'lendings/:id',
-                    name: 'admin-lending-details',
-                    component: AdminLendingDetailsView,
-                    props: true,
-                    meta: { title: 'Kölcsönzés részletei' }
-                },
-                {
-                    path: 'profile',
-                    name: 'admin-profile',
-                    component: AdminProfileView,
-                    meta: { title: 'Profil' }
-                },
-                {
                     path: 'instruments/new',
                     name: 'admin-instrument-new',
                     component: InstrumentFormView,
@@ -158,8 +165,9 @@ const router = createRouter({
             ]
         },
 
-        // 404
+        // ── 404 CATCH-ALL ─────────────────────────────────────────────────────
         {
+            /** Matches every path not matched by the routes above. */
             path: '/:pathMatch(.*)*',
             name: 'not-found',
             component: () => import('@/views/errors/NotFoundView.vue'),
@@ -170,15 +178,23 @@ const router = createRouter({
 
 
 /**
- * Global router guard.
+ * Global navigation guard — runs before every route change.
  *
- * Ensures protected routes require authentication, redirects admins away from
- * the regular /app area into /admin, and prevents logged-in users from visiting
- * guest-only routes like /auth/login.
+ * Check order:
+ *  1. Route requires auth but store has no user → try fetching (handles page refresh).
+ *  2. Route requires admin but user is not admin → redirect to app-home.
+ *  3. Admin tries to visit /app/* → redirect to admin-users.
+ *  4. Route requires auth but user is still not logged in → redirect to login.
+ *  5. Guest-only route but user is logged in → redirect to appropriate home.
+ *  6. Everything OK → return true (allow navigation).
+ *
+ * @param {import('vue-router').RouteLocationNormalized} to
+ * @param {import('vue-router').RouteLocationNormalized} from
  */
 router.beforeEach(async (to, from) => {
     const auth = useAuthStore();
 
+    /** Step 1: re-hydrate Pinia after a page refresh. */
     if (to.meta.requiresAuth && !auth.user) {
         try {
             await auth.fetchUser();
@@ -186,20 +202,24 @@ router.beforeEach(async (to, from) => {
     }
 
     const isLoggedIn = !!auth.user;
-    const isAdmin = auth.user?.is_admin === 1;
+    const isAdmin    = auth.user?.is_admin === 1;
 
+    /** Step 2: non-admins cannot access admin routes. */
     if (to.meta.requiresAdmin && !isAdmin) {
         return { name: 'app-home' };
     }
 
+    /** Step 3: admins should not use the regular /app area. */
     if (isAdmin && to.path.startsWith('/app')) {
         return { name: 'admin-users' };
     }
 
+    /** Step 4: unauthenticated access to protected routes → login. */
     if (to.meta.requiresAuth && !isLoggedIn) {
         return { name: 'login' };
     }
 
+    /** Step 5: already logged-in users away from guest-only pages. */
     if (to.meta.guest && isLoggedIn) {
         return isAdmin
             ? { name: 'admin-users' }

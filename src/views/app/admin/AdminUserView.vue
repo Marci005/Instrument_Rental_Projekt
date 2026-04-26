@@ -1,3 +1,18 @@
+<!--
+  @file AdminUserView.vue
+  @description Admin page — full user list with management actions.
+
+  Loads all users from /api/users on mount and renders them in a striped
+  Bootstrap table. Each row provides three actions:
+    - "Kölcsönzések megtekintése" → navigates to AdminUserRentsView for that user
+    - "Adminná tétel / Admin jog elvétele" → toggles the is_admin flag via the backend
+    - "Törlés" → deletes the user (related rents cascade on the backend)
+
+  Uses the Composition API (script setup) with top-level await-style functions.
+  Data is stored in refs and mutated directly after successful API calls to
+  avoid a full reload where possible (toggle-admin updates the local object;
+  delete filters the user out of the array).
+-->
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
@@ -5,18 +20,20 @@ import apiHandler from "@/utils/apiHandler";
 
 const router = useRouter();
 
-const users = ref([]);
+/** Reactive array of all user objects returned by /api/users. */
+const users   = ref([]);
 const loading = ref(true);
-const error = ref(null);
+const error   = ref(null);
 
 /**
- * Loads all users from the backend.
+ * Fetches the full user list from the backend and stores it in users.
+ * Sets loading to false in the finally block regardless of outcome.
  */
 async function loadUsers() {
   loading.value = true;
   try {
     const response = await apiHandler.get("/api/users");
-    users.value = response.data;
+    users.value    = response.data;
   } catch (err) {
     error.value = "Nem sikerült betölteni a felhasználókat.";
   } finally {
@@ -25,27 +42,35 @@ async function loadUsers() {
 }
 
 /**
- * Toggles the is_admin flag of the given user via the backend endpoint.
- * Updates the user object locally on success.
+ * Toggles the is_admin flag of a user via POST /api/users/:id/toggle-admin.
+ * On success, updates the local user object so the badge and button label
+ * change instantly without refetching the whole list.
+ *
+ * @param {Object} user  The user row object from the table.
  */
 async function toggleAdmin(user) {
   try {
     const response = await apiHandler.post(`/api/users/${user.id}/toggle-admin`);
-    user.is_admin = response.data.is_admin;
+    /** Mutate the existing object in-place so Vue's reactivity picks up the change. */
+    user.is_admin  = response.data.is_admin;
   } catch {
     alert("Hiba történt a jogosultság módosításakor.");
   }
 }
 
 /**
- * Deletes the user from the system after confirmation.
- * Related rents and addresses are deleted via database cascade.
+ * Permanently deletes a user after a browser confirm dialog.
+ * Related rents and addresses are removed by database cascades on the backend.
+ * On success, removes the user from the local array (no reload needed).
+ *
+ * @param {Object} user  The user to delete.
  */
 async function deleteUser(user) {
   if (!confirm(`Biztos törlöd ezt a felhasználót: ${user.email}?`)) return;
 
   try {
     await apiHandler.delete(`/api/users/${user.id}`);
+    /** Filter the deleted user out of the reactive array. */
     users.value = users.value.filter(u => u.id !== user.id);
   } catch {
     alert("Nem sikerült törölni a felhasználót.");
@@ -53,12 +78,16 @@ async function deleteUser(user) {
 }
 
 /**
- * Navigates to the rents page of the selected user.
+ * Navigates to the rental list page for the given user.
+ * Uses a named route so the URL is not hardcoded here.
+ *
+ * @param {Object} user  The user whose rentals should be shown.
  */
 function viewRents(user) {
   router.push({ name: 'admin-user-rents', params: { id: user.id } });
 }
 
+/** Load users as soon as the component is mounted. */
 onMounted(() => {
   loadUsers();
 });
@@ -69,13 +98,16 @@ onMounted(() => {
 
     <h1 class="mb-4">Admin – Felhasználók kezelése</h1>
 
+    <!-- Error alert -->
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
 
+    <!-- Loading spinner -->
     <div v-if="loading" class="text-center">
       <div class="spinner-border"></div>
       <p>Betöltés...</p>
     </div>
 
+    <!-- User table — only rendered once loading is complete -->
     <table v-if="!loading" class="table table-striped table-bordered align-middle">
       <thead>
       <tr>
@@ -94,15 +126,17 @@ onMounted(() => {
         <td>{{ user.first_name }} {{ user.last_name }}</td>
         <td>{{ user.email }}</td>
 
+        <!-- Admin badge: green when admin, grey when not -->
         <td>
-            <span
-                class="badge"
-                :class="user.is_admin ? 'bg-success' : 'bg-secondary'"
-            >
-              {{ user.is_admin ? "Igen" : "Nem" }}
-            </span>
+          <span
+              class="badge"
+              :class="user.is_admin ? 'bg-success' : 'bg-secondary'"
+          >
+            {{ user.is_admin ? "Igen" : "Nem" }}
+          </span>
         </td>
 
+        <!-- View rentals button -->
         <td>
           <button
               class="btn btn-sm btn-outline-info"
@@ -112,7 +146,12 @@ onMounted(() => {
           </button>
         </td>
 
+        <!-- Toggle admin + delete actions -->
         <td>
+          <!--
+            Toggle admin button.
+            Label changes based on the user's current is_admin value.
+          -->
           <button
               class="btn btn-sm btn-warning me-2"
               @click="toggleAdmin(user)"
@@ -120,6 +159,7 @@ onMounted(() => {
             {{ user.is_admin ? "Admin jog elvétele" : "Adminná tétel" }}
           </button>
 
+          <!-- Delete button — triggers confirmation dialog before deletion -->
           <button
               class="btn btn-sm btn-danger"
               @click="deleteUser(user)"

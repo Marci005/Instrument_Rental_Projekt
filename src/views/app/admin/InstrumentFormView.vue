@@ -1,30 +1,56 @@
+<!--
+  @file InstrumentFormView.vue
+  @description Admin page — form for creating a new instrument.
+
+  Loads category and brand lists on mount to populate the two <select> dropdowns.
+  The form collects: category, brand, condition, title, description,
+  monthly price, deposit, and an optional image file.
+
+  Submission logic:
+    - If an image file is selected → sends a multipart/form-data POST via
+      apiHandler.post() which detects the FormData instance and sets the
+      correct Content-Type header automatically.
+    - If no image → sends a plain JSON POST for simplicity.
+
+  Why FormData values are stringified:
+    FormData serialises all values as strings. Laravel's integer validator
+    accepts numeric strings, but `v-model.number` can produce an empty string
+    when the user clears a number field and re-types, so Number() conversion
+    is applied first to normalise the value before String() serialisation.
+
+  On success: shows a success alert and resets the form.
+  On 422:     shows field-level errors below each input.
+  On other:   shows a generic error alert.
+-->
 <script setup>
 import { ref, onMounted } from "vue";
 import apiHandler from "@/utils/apiHandler";
 
-// Form fields
-const categoryId = ref('');
-const brandId = ref('');
-const condition = ref('Új');
-const title = ref('');
-const description = ref('');
+// ── Form field refs ────────────────────────────────────────────────────────
+const categoryId   = ref('');
+const brandId      = ref('');
+const condition    = ref('Új');   // Default: new condition
+const title        = ref('');
+const description  = ref('');
 const monthlyPrice = ref(0);
-const deposit = ref(0);
-const imageFile = ref(null);
-const imagePreview = ref(null);
+const deposit      = ref(0);
+const imageFile    = ref(null);   // File object from the file input
+const imagePreview = ref(null);   // Blob URL for the inline image preview
 
-// Dropdown sources
-const categories = ref([]);
-const brands = ref([]);
+// ── Dropdown data refs ─────────────────────────────────────────────────────
+const categories = ref([]);   // [{id, category_name}, …]
+const brands     = ref([]);   // [{id, brand_name}, …]
 
-// UI state
-const loading = ref(false);
-const success = ref(null);
-const errorMessage = ref(null);
-const fieldErrors = ref({});
+// ── UI state refs ──────────────────────────────────────────────────────────
+const loading      = ref(false);
+const success      = ref(null);        // Success message string
+const errorMessage = ref(null);        // Generic error string
+const fieldErrors  = ref({});          // Laravel validation errors { field: string[] }
 
 /**
- * Loads category and brand lists from the backend in parallel.
+ * Fetches category and brand dropdown data in parallel.
+ * Promise.all is used so both requests fire simultaneously.
+ * On failure, shows a generic error — the form cannot function without these lists.
  */
 async function loadDropdowns() {
   try {
@@ -33,19 +59,24 @@ async function loadDropdowns() {
       apiHandler.get('/api/instrument-brands'),
     ]);
     categories.value = catRes.data;
-    brands.value = brandRes.data;
+    brands.value     = brandRes.data;
   } catch {
     errorMessage.value = "Nem sikerült betölteni a kategóriákat vagy márkákat.";
   }
 }
 
 /**
- * Handles the file input change and creates a local preview URL.
+ * Handles the file input change event.
+ * Revokes the previous object URL to avoid memory leaks, then creates a new
+ * blob URL for the selected file so it can be displayed in the preview <img>.
+ *
+ * @param {Event} event  The native file input change event.
  */
 function onFileChange(event) {
   const file = event.target.files?.[0];
   imageFile.value = file ?? null;
 
+  /** Revoke the previous URL to free browser memory. */
   if (imagePreview.value) {
     URL.revokeObjectURL(imagePreview.value);
     imagePreview.value = null;
@@ -57,82 +88,92 @@ function onFileChange(event) {
 }
 
 /**
- * Clears the currently selected image and its preview URL.
+ * Clears the selected image and revokes its preview URL.
+ * Called by the "Kép eltávolítása" button.
  */
 function removeImage() {
   if (imagePreview.value) {
     URL.revokeObjectURL(imagePreview.value);
   }
   imagePreview.value = null;
-  imageFile.value = null;
+  imageFile.value    = null;
 }
 
 /**
- * Resets every form field to its initial state.
+ * Resets all form fields to their initial/empty state.
+ * Called after a successful submission or by the "Űrlap törlése" button.
  */
 function resetForm() {
-  categoryId.value = '';
-  brandId.value = '';
-  condition.value = 'Új';
-  title.value = '';
-  description.value = '';
+  categoryId.value   = '';
+  brandId.value      = '';
+  condition.value    = 'Új';
+  title.value        = '';
+  description.value  = '';
   monthlyPrice.value = 0;
-  deposit.value = 0;
+  deposit.value      = 0;
   removeImage();
-  fieldErrors.value = {};
+  fieldErrors.value  = {};
 }
 
 /**
- * Submits the form. When an image is attached, uses FormData for multipart upload;
- * otherwise sends JSON for simplicity.
+ * Submits the instrument creation form.
  *
- * Note: FormData serializes all values as strings. Laravel's integer validator
- * accepts numeric strings, but we force explicit String() conversion to avoid
- * edge cases where `v-model.number` produces an empty string after retyping.
+ * Two paths:
+ *  1. Image selected → builds a FormData and posts as multipart/form-data.
+ *     All values are explicitly converted with String() because FormData
+ *     stringifies everything and v-model.number can yield '' on empty inputs.
+ *  2. No image → posts a plain JSON object.
+ *
+ * On success (HTTP 201): shows the success message, resets the form.
+ * On 422: populates fieldErrors for inline display and sets errorMessage.
+ * On other errors: sets the generic errorMessage.
  */
 async function submit() {
-  loading.value = true;
-  success.value = null;
+  loading.value      = true;
+  success.value      = null;
   errorMessage.value = null;
-  fieldErrors.value = {};
+  fieldErrors.value  = {};
 
+  /** Normalise numeric values — Number() converts '' to 0 safely. */
   const monthlyPriceNum = Number(monthlyPrice.value) || 0;
-  const depositNum = Number(deposit.value) || 0;
+  const depositNum      = Number(deposit.value)      || 0;
 
   try {
     let response;
 
     if (imageFile.value) {
-      // Multipart upload path
+      /** Multipart path: build FormData and stringify every value explicitly. */
       const formData = new FormData();
-      formData.append('category_id', String(categoryId.value));
-      formData.append('brand_id', String(brandId.value));
-      formData.append('condition', String(condition.value));
-      formData.append('title', String(title.value));
-      formData.append('description', String(description.value || ''));
+      formData.append('category_id',   String(categoryId.value));
+      formData.append('brand_id',      String(brandId.value));
+      formData.append('condition',     String(condition.value));
+      formData.append('title',         String(title.value));
+      formData.append('description',   String(description.value || ''));
       formData.append('monthly_price', String(monthlyPriceNum));
-      formData.append('deposit', String(depositNum));
-      formData.append('image', imageFile.value);
+      formData.append('deposit',       String(depositNum));
+      formData.append('image',         imageFile.value);  // Binary file object
 
       response = await apiHandler.post('/api/instruments', formData);
     } else {
-      // JSON path (no image attached)
+      /** JSON path: no image attached, send a plain object. */
       response = await apiHandler.post('/api/instruments', {
-        category_id: categoryId.value,
-        brand_id: brandId.value,
-        condition: condition.value,
-        title: title.value,
-        description: description.value || '',
+        category_id:   categoryId.value,
+        brand_id:      brandId.value,
+        condition:     condition.value,
+        title:         title.value,
+        description:   description.value || '',
         monthly_price: monthlyPriceNum,
-        deposit: depositNum,
+        deposit:       depositNum,
       });
     }
 
     success.value = `A hangszer sikeresen felvitt: "${response.data.title}"`;
     resetForm();
+
   } catch (err) {
     if (err.response?.status === 422) {
-      fieldErrors.value = err.response.data.errors || {};
+      /** Laravel validation failed — show per-field messages. */
+      fieldErrors.value  = err.response.data.errors || {};
       errorMessage.value = "Kérjük javítsa az alábbi mezőket.";
     } else {
       errorMessage.value = "Hiba történt a hangszer felvitele során.";
@@ -152,14 +193,16 @@ onMounted(() => {
 
     <h1 class="mb-4">Hangszer felvitel</h1>
 
-    <div v-if="success" class="alert alert-success">{{ success }}</div>
-    <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <!-- Success alert — shown after a successful creation -->
+    <div v-if="success"       class="alert alert-success">{{ success }}</div>
+    <!-- Generic error alert — shown for non-422 errors or summary of 422 -->
+    <div v-if="errorMessage"  class="alert alert-danger">{{ errorMessage }}</div>
 
+    <!-- @submit.prevent stops native browser form submission -->
     <form @submit.prevent="submit" class="card p-4">
-
       <div class="row g-3">
 
-        <!-- Category -->
+        <!-- Category select -->
         <div class="col-md-6">
           <label for="category" class="form-label">Kategória</label>
           <select
@@ -174,12 +217,13 @@ onMounted(() => {
               {{ cat.category_name }}
             </option>
           </select>
+          <!-- Inline validation error from Laravel -->
           <div v-if="fieldErrors.category_id" class="invalid-feedback">
             {{ fieldErrors.category_id[0] }}
           </div>
         </div>
 
-        <!-- Brand -->
+        <!-- Brand select -->
         <div class="col-md-6">
           <label for="brand" class="form-label">Márka</label>
           <select
@@ -199,7 +243,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Condition -->
+        <!-- Condition select — three fixed options matching the backend enum -->
         <div class="col-md-6">
           <label for="condition" class="form-label">Állapot</label>
           <select
@@ -218,7 +262,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Title -->
+        <!-- Title text input — maxlength mirrors the backend's string:100 rule -->
         <div class="col-md-6">
           <label for="title" class="form-label">Cím / megnevezés</label>
           <input
@@ -235,7 +279,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Monthly price -->
+        <!-- Monthly price — v-model.number keeps the value as a JS number -->
         <div class="col-md-6">
           <label for="monthly_price" class="form-label">Havi díj (Ft)</label>
           <input
@@ -252,7 +296,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Deposit -->
+        <!-- Deposit amount -->
         <div class="col-md-6">
           <label for="deposit" class="form-label">Kaució (Ft)</label>
           <input
@@ -269,7 +313,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Description -->
+        <!-- Description textarea — optional -->
         <div class="col-12">
           <label for="description" class="form-label">Leírás</label>
           <textarea
@@ -284,7 +328,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Image -->
+        <!-- Image file input — optional; accepted types mirror the backend rules -->
         <div class="col-12">
           <label for="image" class="form-label">Kép (opcionális)</label>
           <input
@@ -299,7 +343,11 @@ onMounted(() => {
             {{ fieldErrors.image[0] }}
           </div>
 
-          <!-- Preview — constrained size so it doesn't push the submit button below the fold -->
+          <!--
+            Image preview — shown after a file is selected.
+            Max dimensions are capped in CSS so it does not push the
+            submit button below the fold on smaller screens.
+          -->
           <div v-if="imagePreview" class="preview-wrapper mt-3">
             <img :src="imagePreview" alt="Preview" class="preview-img" />
             <button type="button" class="btn btn-sm btn-outline-danger ms-3" @click="removeImage">
@@ -312,11 +360,13 @@ onMounted(() => {
 
       <hr class="my-4" />
 
-      <!-- Form action buttons — always visible on their own row -->
+      <!-- Form action buttons -->
       <div class="form-actions d-flex gap-2 flex-wrap">
+        <!-- Submit: disabled while uploading -->
         <button type="submit" class="btn btn-primary" :disabled="loading">
           {{ loading ? 'Feltöltés...' : 'Hangszer felvitele' }}
         </button>
+        <!-- Reset: clears all fields without submitting -->
         <button type="button" class="btn btn-outline-secondary" @click="resetForm" :disabled="loading">
           Űrlap törlése
         </button>
@@ -332,6 +382,7 @@ onMounted(() => {
   padding: 20px;
 }
 
+/** Preview image wrapper: flex row so the image and remove button sit side by side. */
 .preview-wrapper {
   display: flex;
   align-items: flex-start;
@@ -339,6 +390,7 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
+/** Cap preview size so it does not push page content below the fold. */
 .preview-img {
   max-height: 180px;
   max-width: 280px;
