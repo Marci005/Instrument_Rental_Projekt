@@ -1,14 +1,17 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import apiHandler from "@/utils/apiHandler";
-import { useAuthStore } from "@/utils/authStore";
 
-const auth = useAuthStore();
+const router = useRouter();
 
 const users = ref([]);
 const loading = ref(true);
 const error = ref(null);
 
+/**
+ * Loads all users from the backend.
+ */
 async function loadUsers() {
   loading.value = true;
   try {
@@ -21,26 +24,39 @@ async function loadUsers() {
   }
 }
 
-
+/**
+ * Toggles the is_admin flag of the given user via the backend endpoint.
+ * Updates the user object locally on success.
+ */
 async function toggleAdmin(user) {
   try {
-    await apiHandler.post(`/admin/users/${user.id}/toggle-admin`);
-    user.is_admin = user.is_admin ? 0 : 1;
+    const response = await apiHandler.post(`/api/users/${user.id}/toggle-admin`);
+    user.is_admin = response.data.is_admin;
   } catch {
     alert("Hiba történt a jogosultság módosításakor.");
   }
 }
 
-// 🔥 Felhasználó törlése
+/**
+ * Deletes the user from the system after confirmation.
+ * Related rents and addresses are deleted via database cascade.
+ */
 async function deleteUser(user) {
-  if (!confirm(`Biztos törlöd: ${user.email}?`)) return;
+  if (!confirm(`Biztos törlöd ezt a felhasználót: ${user.email}?`)) return;
 
   try {
-    await apiHandler.delete(`/admin/users/${user.id}`);
+    await apiHandler.delete(`/api/users/${user.id}`);
     users.value = users.value.filter(u => u.id !== user.id);
   } catch {
     alert("Nem sikerült törölni a felhasználót.");
   }
+}
+
+/**
+ * Navigates to the rents page of the selected user.
+ */
+function viewRents(user) {
+  router.push({ name: 'admin-user-rents', params: { id: user.id } });
 }
 
 onMounted(() => {
@@ -51,20 +67,6 @@ onMounted(() => {
 <template>
   <div class="admin-page">
 
-    <nav class="admin-nav mb-4">
-      <RouterLink to="/admin/lendings" class="btn btn-outline-primary me-2">
-        Kölcsönzések kezelése
-      </RouterLink>
-
-      <RouterLink to="/admin/users" class="btn btn-primary me-2">
-        Felhasználók kezelése
-      </RouterLink>
-
-      <RouterLink to="/admin/settings" class="btn btn-outline-primary">
-        Admin beállítások
-      </RouterLink>
-    </nav>
-
     <h1 class="mb-4">Admin – Felhasználók kezelése</h1>
 
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
@@ -74,13 +76,14 @@ onMounted(() => {
       <p>Betöltés...</p>
     </div>
 
-    <table v-if="!loading" class="table table-striped table-bordered">
+    <table v-if="!loading" class="table table-striped table-bordered align-middle">
       <thead>
       <tr>
         <th>ID</th>
         <th>Név</th>
         <th>Email</th>
         <th>Admin?</th>
+        <th>Kölcsönzések</th>
         <th>Műveletek</th>
       </tr>
       </thead>
@@ -98,6 +101,15 @@ onMounted(() => {
             >
               {{ user.is_admin ? "Igen" : "Nem" }}
             </span>
+        </td>
+
+        <td>
+          <button
+              class="btn btn-sm btn-outline-info"
+              @click="viewRents(user)"
+          >
+            Kölcsönzések megtekintése
+          </button>
         </td>
 
         <td>
@@ -125,10 +137,5 @@ onMounted(() => {
 <style scoped>
 .admin-page {
   padding: 20px;
-}
-
-.admin-nav {
-  display: flex;
-  gap: 10px;
 }
 </style>
