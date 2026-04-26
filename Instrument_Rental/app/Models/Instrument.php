@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 class Instrument extends Model
 {
     /**
@@ -14,27 +11,26 @@ class Instrument extends Model
      *
      * @var array<string>
      */
-
     protected $fillable = [
         'category_id',
         'brand_id',
         'condition',
         'title',
         'description',
+        'monthly_price',
+        'deposit',
+        'image',
     ];
-
     /**
      * Connects the Instrument model to the InstrumentCategory model with a BelongsTo relation.
      * One instrument belongs to one category.
      *
      * @return BelongsTo
      */
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(InstrumentCategory::class, 'category_id');
     }
-
     /**
      * Connects the Instrument model to the InstrumentBrand model with a BelongsTo relation.
      * One instrument belongs to one brand.
