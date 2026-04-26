@@ -6,6 +6,7 @@ use App\Http\Controllers\InstrumentBrandController;
 use App\Http\Controllers\InstrumentCategoryController;
 use App\Http\Controllers\InstrumentController;
 use App\Http\Controllers\RentController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,26 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/addresses/{address}', [AddressController::class, 'update']);
     Route::patch('/addresses/{address}', [AddressController::class, 'update']);
     Route::delete('/addresses', [AddressController::class, 'destroy']);
+});
+
+/**
+ * User management endpoints (admin area).
+ *
+ * Requires: auth:sanctum, is_admin
+ *
+ * GET    /users                      List all users.
+ * GET    /users/{user}               Show a specific user.
+ * GET    /users/{user}/rents         List all rents of a user.
+ * POST   /users/{user}/toggle-admin  Toggle the is_admin flag of a user.
+ * DELETE /users/{user}               Delete a user.
+ */
+
+Route::middleware(['auth:sanctum', 'is_admin'])->group(function () {
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::get('/users/{user}/rents', [UserController::class, 'rents']);
+    Route::post('/users/{user}/toggle-admin', [UserController::class, 'toggleAdmin']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
 });
 
 
