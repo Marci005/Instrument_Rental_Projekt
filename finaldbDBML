@@ -1,0 +1,74 @@
+table users {
+  id int [pk, increment]
+  is_admin tinyint [not null, default: 0]
+  email varchar(100) [unique, not null]
+  password varchar(255) [not null]
+  title enum('Uram', 'Hölgyem', 'Dr.', 'Professzor')
+  first_name varchar(100) [not null]
+  last_name varchar(100) [not null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+table addresses {
+  id int [pk, increment]
+  user_id int [not null]
+  address_type enum('szállítási', 'számlázási', 'szállítási és számlázási') [not null]
+  zip int [not null]
+  settlement varchar(100) [not null]
+  street varchar(100) [not null]
+  street_type enum('út', 'utca', 'tér', 'köz', 'körút') [not null]
+  house_number varchar(20) [not null]
+  floor_number smallint
+  door_number smallint
+  created_at timestamp
+  updated_at timestamp
+}
+
+table instrument_categories {
+  id int [pk, increment]
+  category_name varchar(100) [not null]
+  category_desc text
+  created_at timestamp
+  updated_at timestamp
+}
+
+table instrument_brands {
+  id int [pk, increment]
+  brand_name varchar(100) [not null]
+  brand_desc text
+  created_at timestamp
+  updated_at timestamp
+}
+
+table instruments {
+  id int [pk, increment]
+  category_id int [not null]
+  brand_id int [not null]
+  condition enum('Új', 'Újszerű', 'Használt') [not null]
+  title varchar(100) [not null]
+  description text
+  monthly_price int [not null]
+  deposit int [not null]
+  image varchar(255)
+  created_at timestamp
+  updated_at timestamp
+}
+
+table rents {
+  id int [pk, increment]
+  user_id int [not null]
+  instrument_id int [not null]
+  rent_price int [not null]
+  start_date date [not null]
+  end_date date [not null]
+  real_end_date date
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: addresses.user_id > users.id [delete: cascade]
+Ref: instruments.category_id > instrument_categories.id
+Ref: instruments.brand_id > instrument_brands.id
+Ref: rents.user_id > users.id [delete: cascade]
+Ref: rents.instrument_id > instruments.id [delete: cascade]
