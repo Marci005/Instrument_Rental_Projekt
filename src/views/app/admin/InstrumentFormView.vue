@@ -22,170 +22,179 @@
   On 422:     shows field-level errors below each input.
   On other:   shows a generic error alert.
 -->
-<script setup>
-import { ref, onMounted } from "vue";
+<script>
 import apiHandler from "@/utils/apiHandler";
 
-// ── Form field refs ────────────────────────────────────────────────────────
-const categoryId   = ref('');
-const brandId      = ref('');
-const condition    = ref('Új');   // Default: new condition
-const title        = ref('');
-const description  = ref('');
-const monthlyPrice = ref(0);
-const deposit      = ref(0);
-const imageFile    = ref(null);   // File object from the file input
-const imagePreview = ref(null);   // Blob URL for the inline image preview
+export default {
+  name: "InstrumentFormView",
 
-// ── Dropdown data refs ─────────────────────────────────────────────────────
-const categories = ref([]);   // [{id, category_name}, …]
-const brands     = ref([]);   // [{id, brand_name}, …]
+  data() {
+    return {
+      // ── Form fields ──────────────────────────────────────────────────────
+      categoryId: '',
+      brandId: '',
+      condition: 'Új',          // Default: new condition
+      title: '',
+      description: '',
+      monthlyPrice: 0,
+      deposit: 0,
+      imageFile: null,          // File object from the file input
+      imagePreview: null,       // Blob URL for the inline image preview
 
-// ── UI state refs ──────────────────────────────────────────────────────────
-const loading      = ref(false);
-const success      = ref(null);        // Success message string
-const errorMessage = ref(null);        // Generic error string
-const fieldErrors  = ref({});          // Laravel validation errors { field: string[] }
+      // ── Dropdown data ────────────────────────────────────────────────────
+      categories: [],           // [{id, category_name}, …]
+      brands: [],               // [{id, brand_name}, …]
 
-/**
- * Fetches category and brand dropdown data in parallel.
- * Promise.all is used so both requests fire simultaneously.
- * On failure, shows a generic error — the form cannot function without these lists.
- */
-async function loadDropdowns() {
-  try {
-    const [catRes, brandRes] = await Promise.all([
-      apiHandler.get('/api/instrument-categories'),
-      apiHandler.get('/api/instrument-brands'),
-    ]);
-    categories.value = catRes.data;
-    brands.value     = brandRes.data;
-  } catch {
-    errorMessage.value = "Nem sikerült betölteni a kategóriákat vagy márkákat.";
-  }
-}
+      // ── UI state ─────────────────────────────────────────────────────────
+      loading: false,
+      success: null,            // Success message string
+      errorMessage: null,       // Generic error string
+      fieldErrors: {}           // Laravel validation errors { field: string[] }
+    };
+  },
 
-/**
- * Handles the file input change event.
- * Revokes the previous object URL to avoid memory leaks, then creates a new
- * blob URL for the selected file so it can be displayed in the preview <img>.
- *
- * @param {Event} event  The native file input change event.
- */
-function onFileChange(event) {
-  const file = event.target.files?.[0];
-  imageFile.value = file ?? null;
+  methods: {
+    /**
+     * Fetches category and brand dropdown data in parallel.
+     * Promise.all is used so both requests fire simultaneously.
+     * On failure, shows a generic error — the form cannot function without these lists.
+     */
+    async loadDropdowns() {
+      try {
+        const [catRes, brandRes] = await Promise.all([
+          apiHandler.get('/api/instrument-categories'),
+          apiHandler.get('/api/instrument-brands'),
+        ]);
+        this.categories = catRes.data;
+        this.brands = brandRes.data;
+      } catch {
+        this.errorMessage = "Nem sikerült betölteni a kategóriákat vagy márkákat.";
+      }
+    },
 
-  /** Revoke the previous URL to free browser memory. */
-  if (imagePreview.value) {
-    URL.revokeObjectURL(imagePreview.value);
-    imagePreview.value = null;
-  }
+    /**
+     * Handles the file input change event.
+     * Revokes the previous object URL to avoid memory leaks, then creates a new
+     * blob URL for the selected file so it can be displayed in the preview <img>.
+     *
+     * @param {Event} event  The native file input change event.
+     */
+    onFileChange(event) {
+      const file = event.target.files?.[0];
+      this.imageFile = file ?? null;
 
-  if (file) {
-    imagePreview.value = URL.createObjectURL(file);
-  }
-}
+      /** Revoke the previous URL to free browser memory. */
+      if (this.imagePreview) {
+        URL.revokeObjectURL(this.imagePreview);
+        this.imagePreview = null;
+      }
 
-/**
- * Clears the selected image and revokes its preview URL.
- * Called by the "Kép eltávolítása" button.
- */
-function removeImage() {
-  if (imagePreview.value) {
-    URL.revokeObjectURL(imagePreview.value);
-  }
-  imagePreview.value = null;
-  imageFile.value    = null;
-}
+      if (file) {
+        this.imagePreview = URL.createObjectURL(file);
+      }
+    },
 
-/**
- * Resets all form fields to their initial/empty state.
- * Called after a successful submission or by the "Űrlap törlése" button.
- */
-function resetForm() {
-  categoryId.value   = '';
-  brandId.value      = '';
-  condition.value    = 'Új';
-  title.value        = '';
-  description.value  = '';
-  monthlyPrice.value = 0;
-  deposit.value      = 0;
-  removeImage();
-  fieldErrors.value  = {};
-}
+    /**
+     * Clears the selected image and revokes its preview URL.
+     * Called by the "Kép eltávolítása" button.
+     */
+    removeImage() {
+      if (this.imagePreview) {
+        URL.revokeObjectURL(this.imagePreview);
+      }
+      this.imagePreview = null;
+      this.imageFile = null;
+    },
 
-/**
- * Submits the instrument creation form.
- *
- * Two paths:
- *  1. Image selected → builds a FormData and posts as multipart/form-data.
- *     All values are explicitly converted with String() because FormData
- *     stringifies everything and v-model.number can yield '' on empty inputs.
- *  2. No image → posts a plain JSON object.
- *
- * On success (HTTP 201): shows the success message, resets the form.
- * On 422: populates fieldErrors for inline display and sets errorMessage.
- * On other errors: sets the generic errorMessage.
- */
-async function submit() {
-  loading.value      = true;
-  success.value      = null;
-  errorMessage.value = null;
-  fieldErrors.value  = {};
+    /**
+     * Resets all form fields to their initial/empty state.
+     * Called after a successful submission or by the "Űrlap törlése" button.
+     */
+    resetForm() {
+      this.categoryId = '';
+      this.brandId = '';
+      this.condition = 'Új';
+      this.title = '';
+      this.description = '';
+      this.monthlyPrice = 0;
+      this.deposit = 0;
+      this.removeImage();
+      this.fieldErrors = {};
+    },
 
-  /** Normalise numeric values — Number() converts '' to 0 safely. */
-  const monthlyPriceNum = Number(monthlyPrice.value) || 0;
-  const depositNum      = Number(deposit.value)      || 0;
+    /**
+     * Submits the instrument creation form.
+     *
+     * Two paths:
+     *  1. Image selected → builds a FormData and posts as multipart/form-data.
+     *     All values are explicitly converted with String() because FormData
+     *     stringifies everything and v-model.number can yield '' on empty inputs.
+     *  2. No image → posts a plain JSON object.
+     *
+     * On success (HTTP 201): shows the success message, resets the form.
+     * On 422: populates fieldErrors for inline display and sets errorMessage.
+     * On other errors: sets the generic errorMessage.
+     */
+    async submit() {
+      this.loading = true;
+      this.success = null;
+      this.errorMessage = null;
+      this.fieldErrors = {};
 
-  try {
-    let response;
+      /** Normalise numeric values — Number() converts '' to 0 safely. */
+      const monthlyPriceNum = Number(this.monthlyPrice) || 0;
+      const depositNum = Number(this.deposit) || 0;
 
-    if (imageFile.value) {
-      /** Multipart path: build FormData and stringify every value explicitly. */
-      const formData = new FormData();
-      formData.append('category_id',   String(categoryId.value));
-      formData.append('brand_id',      String(brandId.value));
-      formData.append('condition',     String(condition.value));
-      formData.append('title',         String(title.value));
-      formData.append('description',   String(description.value || ''));
-      formData.append('monthly_price', String(monthlyPriceNum));
-      formData.append('deposit',       String(depositNum));
-      formData.append('image',         imageFile.value);  // Binary file object
+      try {
+        let response;
 
-      response = await apiHandler.post('/api/instruments', formData);
-    } else {
-      /** JSON path: no image attached, send a plain object. */
-      response = await apiHandler.post('/api/instruments', {
-        category_id:   categoryId.value,
-        brand_id:      brandId.value,
-        condition:     condition.value,
-        title:         title.value,
-        description:   description.value || '',
-        monthly_price: monthlyPriceNum,
-        deposit:       depositNum,
-      });
+        if (this.imageFile) {
+          /** Multipart path: build FormData and stringify every value explicitly. */
+          const formData = new FormData();
+          formData.append('category_id', String(this.categoryId));
+          formData.append('brand_id', String(this.brandId));
+          formData.append('condition', String(this.condition));
+          formData.append('title', String(this.title));
+          formData.append('description', String(this.description || ''));
+          formData.append('monthly_price', String(monthlyPriceNum));
+          formData.append('deposit', String(depositNum));
+          formData.append('image', this.imageFile);  // Binary file object
+
+          response = await apiHandler.post('/api/instruments', formData);
+        } else {
+          /** JSON path: no image attached, send a plain object. */
+          response = await apiHandler.post('/api/instruments', {
+            category_id: this.categoryId,
+            brand_id: this.brandId,
+            condition: this.condition,
+            title: this.title,
+            description: this.description || '',
+            monthly_price: monthlyPriceNum,
+            deposit: depositNum,
+          });
+        }
+
+        this.success = `A hangszer sikeresen felvitt: "${response.data.title}"`;
+        this.resetForm();
+
+      } catch (err) {
+        if (err.response?.status === 422) {
+          /** Laravel validation failed — show per-field messages. */
+          this.fieldErrors = err.response.data.errors || {};
+          this.errorMessage = "Kérjük javítsa az alábbi mezőket.";
+        } else {
+          this.errorMessage = "Hiba történt a hangszer felvitele során.";
+        }
+      } finally {
+        this.loading = false;
+      }
     }
+  },
 
-    success.value = `A hangszer sikeresen felvitt: "${response.data.title}"`;
-    resetForm();
-
-  } catch (err) {
-    if (err.response?.status === 422) {
-      /** Laravel validation failed — show per-field messages. */
-      fieldErrors.value  = err.response.data.errors || {};
-      errorMessage.value = "Kérjük javítsa az alábbi mezőket.";
-    } else {
-      errorMessage.value = "Hiba történt a hangszer felvitele során.";
-    }
-  } finally {
-    loading.value = false;
+  mounted() {
+    this.loadDropdowns();
   }
-}
-
-onMounted(() => {
-  loadDropdowns();
-});
+};
 </script>
 
 <template>
@@ -194,9 +203,9 @@ onMounted(() => {
     <h1 class="mb-4">Hangszer felvitel</h1>
 
     <!-- Success alert — shown after a successful creation -->
-    <div v-if="success"       class="alert alert-success">{{ success }}</div>
+    <div v-if="success" class="alert alert-success">{{ success }}</div>
     <!-- Generic error alert — shown for non-422 errors or summary of 422 -->
-    <div v-if="errorMessage"  class="alert alert-danger">{{ errorMessage }}</div>
+    <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
     <!-- @submit.prevent stops native browser form submission -->
     <form @submit.prevent="submit" class="card p-4">
