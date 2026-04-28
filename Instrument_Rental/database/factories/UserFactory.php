@@ -20,6 +20,9 @@ class UserFactory extends Factory
     /**
      * Define the model's default state.
      *
+     * Title values must match the AuthController register() validation enum:
+     * 'Úr', 'Hölgy', 'Dr.', 'Professzor'.
+     *
      * @return array<string, mixed>
      */
     public function definition(): array
@@ -27,7 +30,7 @@ class UserFactory extends Factory
         return [
             'first_name' => fake()->firstName(),
             'last_name'  => fake()->lastName(),
-            'title'      => fake()->randomElement(['Uram', 'Hölgyem', 'Dr.', 'Professzor']),
+            'title'      => fake()->randomElement(['Úr', 'Hölgy', 'Dr.', 'Professzor']),
             'email'      => fake()->unique()->safeEmail(),
             'password'   => static::$password ??= Hash::make('password'),
             'is_admin'   => 0,
