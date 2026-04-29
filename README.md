@@ -1,6 +1,6 @@
 # Hangszer Kölcsönző
 
- ## !! FOTOS: Néhol elkövettük azt a hibát, hogy Deák Ádám csapattagunk lokális git nevét nem írtuk át, tehát kérjük, vegyék figyelembe, hogy a user néven történt commitok valójában az ő commitjai. Köszönjük.!!
+ ## !! FOTOS: Néhol elkövettük azt a hibát, hogy Deák Ádám csapattagunk lokális git nevét nem írtuk át, tehát kérjük, vegyék figyelembe, hogy a user néven történt commitok valójában az ő commitjai. Köszönjük !!
 
 
 Webalapú hangszerkölcsönző alkalmazás
