@@ -1,7 +1,9 @@
 # Hangszer Kölcsönző
 
-Webalapú hangszerkölcsönző alkalmazás — szakmai vizsgaremek.
+ ## !! FOTOS: Néhol elkövettük azt a hibát, hogy Deák Ádám csapattagunk lokális git nevét nem írtuk át, tehát kérjük, vegyék figyelembe, hogy a user néven történt commitok valójában az ő commitjai. Köszönjük.!!
 
+
+Webalapú hangszerkölcsönző alkalmazás
 A projekt két fő részből áll:
 - **Backend** — Laravel 12 + Sanctum + MySQL, REST API
 - **Frontend** — Vue 3 + Pinia + Vue Router + Bootstrap 5
